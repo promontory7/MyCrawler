@@ -3,14 +3,19 @@ package pageprocessor;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import model.Project;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
+import utils.SessionFactoryUtil;
 
 public class ShanTouProcessor implements PageProcessor {
 	public static final String URL_LIST = "http://www\\.stjs\\.org\\.cn/zbtb/zhaobiao_gonggao\\.asp*";
@@ -46,6 +51,7 @@ public class ShanTouProcessor implements PageProcessor {
 			Document doc = Jsoup.parse(page.getHtml().toString());
 
 			Elements divElement = doc.body().select("tbody");
+			Project project = new Project();
 
 			for (Element tbody : divElement) {
 				int num = tbody.select("tr").size();
@@ -58,29 +64,64 @@ public class ShanTouProcessor implements PageProcessor {
 							for (int j = 0; j < m; j = j + 2) {
 								System.out.println(
 										tr.select("td").get(j).text() + " : " + tr.select("td").get(j + 1).text());
+
+								if (tr.select("td").get(j).text().equals("工程编号")) {
+									project.setProjectNo(tr.select("td").get(j + 1).text());
+								}
+								if (tr.select("td").get(j).text().equals("工程名称")) {
+									project.setProjectName(tr.select("td").get(j + 1).text());
+								}
+								if (tr.select("td").get(j).text().equals("招标人")) {
+									project.setOwners(tr.select("td").get(j + 1).text());
+								}
+								if (tr.select("td").get(j).text().equals("招标代理机构")) {
+									project.setAgency(tr.select("td").get(j + 1).text());
+								}
+								if (tr.select("td").get(j).text().equals("联系人")) {
+									project.setOwnerpeopleName(tr.select("td").get(j + 1).text());
+								}
+								if (tr.select("td").get(j).text().equals("联系电话")) {
+									project.setOwnerpeoplePhone(tr.select("td").get(j + 1).text());
+								}
+								if (tr.select("td").get(j).text().equals("工程地点")) {
+									project.setProjectAddress(tr.select("td").get(j + 1).text());
+								}
+								if (tr.select("td").get(j).text().equals("招标内容")) {
+									project.setArticle(tr.select("td").get(j + 1).text());
+								}
+								if (tr.select("td").get(j).text().equals("报名时间")) {
+									String[] strings = tr.select("td").get(j + 1).text().split("～");
+									if (strings.length == 2) {
+										project.setPublicStart(strings[0]);
+										project.setPublicEnd(strings[2]);
+									}
+								}
+
+							}
+
+							SessionFactory sf = SessionFactoryUtil.getInstance();
+							Session s = null;
+							Transaction t = null;
+
+							try {
+								s = sf.openSession();
+								t = s.beginTransaction();
+								s.save(project);
+								t.commit();
+							} catch (Exception err) {
+								t.rollback();
+								err.printStackTrace();
+							} finally {
+								s.close();
 							}
 						}
-
-						System.out.println(tbody.select("tr").get(0).select("td").get(1).text());
 					}
 
+					// System.out.println(tbody.select("tr").get(0).select("td").get(1).text());
 				}
+
 			}
 		}
-
-		// for(Element tr:divElement){
-		// int num=tr.select("td").size();
-		// if(num>0){
-		// for(int i=0;i<num;i=i+2){
-		// page.putField(tr.select("td").get(i).text(),
-		// tr.select("td").get(i+1).text());
-		// System.out.println(tr.select("th").get(i).text()+" :
-		// "+tr.select("td").get(i).text());
-		// }
-		//
-		// }
-		// }
-
 	}
 
 	@Override
