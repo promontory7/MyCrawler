@@ -5,6 +5,7 @@ import org.hibernate.cfg.Configuration;
 
 import model.Project;
 import pageprocessor.GuangdongProcessor;
+import pageprocessor.NBANewsProcessor;
 import pageprocessor.ShanTouProcessor;
 import pageprocessor.ZhongshanProcessor;
 import pageprocessor.ZhuHaiProcessor;
@@ -23,7 +24,8 @@ public class MainCrawler {
 		// .thread(5)
 		// .run();
 
-		Spider.create(new ShanTouProcessor()).addUrl(ShanTouProcessor.url).thread(5).run();
+//		Spider.create(new ShanTouProcessor()).addUrl(ShanTouProcessor.url).thread(5).run();
+		Spider.create(new NBANewsProcessor()).addUrl(NBANewsProcessor.url).thread(5).run();
 
 		// Spider.create(new
 		// ZhongshanProcessor()).addUrl(ZhongshanProcessor.url)

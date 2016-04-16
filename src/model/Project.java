@@ -2,21 +2,7 @@ package model;
 
 public class Project {
 
-	public String getArticle() {
-		return article;
-	}
-
-	public void setArticle(String article) {
-		this.article = article;
-	}
-
-	public String getWebsiteType() {
-		return websiteType;
-	}
-
-	public void setWebsiteType(String websiteType) {
-		this.websiteType = websiteType;
-	}
+	
 
 	public String id;
 	public String websiteType; // 网站类型
@@ -45,6 +31,23 @@ public class Project {
 	public String manager_require; // 项目负责人要求
 	public String attach; // 附件地址
 	public String article; // 全文
+	
+	
+	public String getArticle() {
+		return article;
+	}
+
+	public void setArticle(String article) {
+		this.article = article;
+	}
+
+	public String getWebsiteType() {
+		return websiteType;
+	}
+
+	public void setWebsiteType(String websiteType) {
+		this.websiteType = websiteType;
+	}
 
 	public String getAgencyName() {
 		return agencyName;

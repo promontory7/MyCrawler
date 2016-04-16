@@ -93,27 +93,26 @@ public class ShanTouProcessor implements PageProcessor {
 									String[] strings = tr.select("td").get(j + 1).text().split("～");
 									if (strings.length == 2) {
 										project.setPublicStart(strings[0]);
-										project.setPublicEnd(strings[2]);
+										project.setPublicEnd(strings[1].replace("( 上班时间内 )", ""));
 									}
 								}
 
 							}
+						}
+						SessionFactory sf = SessionFactoryUtil.getInstance();
+						Session s = null;
+						Transaction t = null;
 
-							SessionFactory sf = SessionFactoryUtil.getInstance();
-							Session s = null;
-							Transaction t = null;
-
-							try {
-								s = sf.openSession();
-								t = s.beginTransaction();
-								s.save(project);
-								t.commit();
-							} catch (Exception err) {
-								t.rollback();
-								err.printStackTrace();
-							} finally {
-								s.close();
-							}
+						try {
+							s = sf.openSession();
+							t = s.beginTransaction();
+							s.save(project);
+							t.commit();
+						} catch (Exception err) {
+							t.rollback();
+							err.printStackTrace();
+						} finally {
+							s.close();
 						}
 					}
 
