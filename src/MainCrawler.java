@@ -5,6 +5,7 @@ import org.hibernate.cfg.Configuration;
 
 import model.Project;
 import pageprocessor.GuangdongProcessor;
+import pageprocessor.Lixinji;
 import pageprocessor.NBANewsProcessor;
 import pageprocessor.ShanTouProcessor;
 import pageprocessor.ZhongshanProcessor;
@@ -13,6 +14,8 @@ import pageprocessoruncomplate.FoShangProcessor;
 import pageprocessoruncomplate.GuangDongTransportationProcessor;
 import pageprocessoruncomplate.GuanghzouPublicResourceProcessor;
 import us.codecraft.webmagic.Spider;
+import us.codecraft.webmagic.pipeline.FilePipeline;
+import us.codecraft.webmagic.pipeline.JsonFilePipeline;
 
 public class MainCrawler {
 
@@ -24,8 +27,9 @@ public class MainCrawler {
 		// .thread(5)
 		// .run();
 
-//		Spider.create(new ShanTouProcessor()).addUrl(ShanTouProcessor.url).thread(5).run();
-		Spider.create(new NBANewsProcessor()).addUrl(NBANewsProcessor.url).thread(5).run();
+		Spider.create(new ShanTouProcessor()).addUrl(ShanTouProcessor.url).thread(5).run();
+//		Spider.create(new NBANewsProcessor()).addUrl(NBANewsProcessor.url).thread(5).run();
+//		Spider.create(new Lixinji()).addUrl(Lixinji.url).addPipeline(new JsonFilePipeline("/Users/hehe")).thread(5).run();
 
 		// Spider.create(new
 		// ZhongshanProcessor()).addUrl(ZhongshanProcessor.url)
