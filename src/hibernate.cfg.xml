@@ -17,7 +17,5 @@
 
 
 		<mapping resource="model/Project.hbm.xml" />
-		<mapping resource="model/News.hbm.xml" />
-		<mapping resource="model/NewDetail.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>  

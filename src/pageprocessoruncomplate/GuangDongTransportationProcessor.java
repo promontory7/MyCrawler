@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;

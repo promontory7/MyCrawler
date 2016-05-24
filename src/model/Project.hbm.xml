@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC  
         '-//Hibernate/Hibernate Mapping DTD 3.0//EN'  
         'http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd'>
-<hibernate-mapping>
+<hibernate-mapping package="cn.wa8.qweb.extract.bean">
 	<class name="model.Project" table="project">
 		<!-- 映射标识属性 -->
 		<id name="id" type="string">
@@ -12,7 +12,7 @@
 		<property name="websiteType"></property>
 		<property name="projectName"></property>
 		<property name="projectNo"></property>
-		<property name="projectBrief"></property>
+		<property name="projectBrief" length="4000"></property>
 		<property name="projectAddress"></property>
 		<property name="projectType"></property>
 		<property name="projectStage"></property>
@@ -21,7 +21,7 @@
 		<property name="planCycle"></property>
 		<property name="publicStart"></property>
 		<property name="publicEnd"></property>
-		<property name="FinalEnd"></property>
+		<property name="finalEnd"></property>
 		<property name="owners"></property>
 		<property name="ownerpeopleName"></property>
 		<property name="ownerpeoplePhone"></property>
@@ -34,7 +34,8 @@
 		<property name="qualification_requir"></property>
 		<property name="manager_require"></property>
 		<property name="article" length="4000"></property>
-		<property name="attach"></property>
+		<property name="attach" length="4000"></property>
+		<property name="state"></property>
 	</class>
 </hibernate-mapping>  
 

@@ -3,12 +3,20 @@ package pageprocessoruncomplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
+import model.Project;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
+import utils.HibernateUtil;
+import utils.SessionFactoryUtil;
 
 public class FoShangProcessor implements PageProcessor {
 
@@ -33,7 +41,7 @@ public class FoShangProcessor implements PageProcessor {
 		if (isFirst) {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
-			for (int i = 1; i < 50; i++) {
+			for (int i = 1; i < 5; i++) {
 				urls.add("http://www.fsggzy.cn/gcjy/gc_zbxx/gc_zbsz/index_" + i + ".html");
 				urls.add("http://www.fsggzy.cn/gcjy/gc_zbxx/jygg_gq/index_" + i + ".html");
 			}
@@ -53,8 +61,23 @@ public class FoShangProcessor implements PageProcessor {
 			}
 		}
 		if (page.getUrl().regex(URL_DETAILS).match()) {
-			System.out.println(doc.getElementsByAttributeValue("class", "contenttitle2").text());
-			System.out.println(doc.getElementsByAttributeValue("class", "content2").text());
+			Project project = new Project();
+			project.setWebsiteType("foshang");
+			project.setState(0);
+			String projectName = doc.getElementsByAttributeValue("class", "contenttitle2").text();
+			Elements mElements = doc.getElementsByAttributeValue("class", "content2").select("p");
+			StringBuffer article = new StringBuffer();
+			for (Element p : mElements) {
+				article.append(p.text()).append("\n");
+			}
+
+			project.setProjectName(projectName);
+			project.setArticle(article.toString());
+			project.setPublicStart(doc.getElementsByAttributeValue("class", "fbtime").text());
+			System.out.println(project.toString());
+
+			HibernateUtil.save2Hibernate(project);
+
 		}
 	}
 

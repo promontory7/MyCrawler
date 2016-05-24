@@ -7,9 +7,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import model.Project;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
+import utils.HibernateUtil;
 
 /**
  * 广州公共资源交易网
@@ -18,7 +20,7 @@ import us.codecraft.webmagic.processor.PageProcessor;
  *
  */
 public class GuanghzouPublicResourceProcessor implements PageProcessor {
-	
+
 	public static final String URL_LIST = "http://www\\.gzggzy\\.cn/cms/wz/view/index/layout2/szlist\\.jsp\\w*";
 	// 房建市政
 	public static final String URL_LIST1 = "http://www\\.gzggzy\\.cn/cms/wz/view/index/layout2/szlist\\.jsp\\?siteId=1&channelId=503&pchannelid=466&curgclb=01\\,02&curxmlb=01\\,02\\,03\\,04\\,05&curIndex=1&pcurIndex=1&cIndex=1&page=\\d+";
@@ -82,7 +84,7 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 			urls.add(
 					"http://www.gzggzy.cn/cms/wz/view/index/layout2/szlist.jsp?siteId=1&channelId=535&channelids=15&pchannelid=474&curgclb=13&curxmlb=01,02,03,04,05&curIndex=1&pcurIndex=9&page=0");
 
-			System.out.println("全部的数量" + urls.size());
+			System.out.println("全部种类数量" + urls.size());
 			page.addTargetRequests(urls);
 			isFirst = false;
 		}
@@ -92,14 +94,46 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 			System.out.println("获取列表数据");
 
 			List<String> urls = page.getHtml().xpath("//td[@class=\"text_left\"]").links().regex(URL_DETAILS).all();
+			System.out.println("这个页面数据数量" + urls.size());
+
 			if (urls != null && urls.size() > 0) {
 				page.addTargetRequests(urls);
+
 			}
 		}
 
 		if (page.getUrl().regex(URL_DETAILS).match()) {
-			System.out.println(doc.getElementsByAttributeValue("class", "Section1").select("p").get(0).text());
-			System.out.println(doc.getElementsByAttributeValue("class", "Section1").text());
+			Project project = new Project();
+
+			String projectName = null;
+			StringBuffer article = new StringBuffer();
+			StringBuffer attach =new StringBuffer();
+
+			Elements elements = doc.getElementsByAttributeValue("class", "Section1").select("p");
+			for (int i = 0; i < elements.size(); i++) {
+				projectName = elements.get(i).text().trim();
+				if (projectName != null || projectName != "") {
+					break;
+				}
+			}
+			for (int i = 0; i < elements.size(); i++) {
+				article.append(elements.get(i).text()).append("\n");
+			}
+			
+			Elements attachElements = doc.getElementsByAttributeValue("class", "xx-main").select("font");
+			for (int i = 1; i < attachElements.size(); i++) {
+				attach.append(attachElements.get(i).text()).append(" 网址    ").append(attachElements.get(i).select("a").attr("href")).append("\n");
+			}
+			
+			
+			project.setWebsiteType("guangzhou");
+			project.setState(0);
+			project.setProjectName(projectName);
+			project.setArticle(article.toString());
+			project.setAttach(attach.toString());
+			System.out.println(project.toString());
+
+			HibernateUtil.save2Hibernate(project);
 		}
 	}
 

@@ -6,7 +6,6 @@ import org.hibernate.cfg.Configuration;
 import model.Project;
 import pageprocessor.GuangdongProcessor;
 import pageprocessor.Lixinji;
-import pageprocessor.NBANewsProcessor;
 import pageprocessor.ShanTouProcessor;
 import pageprocessor.ZhongshanProcessor;
 import pageprocessor.ZhuHaiProcessor;
@@ -27,20 +26,22 @@ public class MainCrawler {
 		// .thread(5)
 		// .run();
 
-		Spider.create(new ShanTouProcessor()).addUrl(ShanTouProcessor.url).thread(5).run();
-//		Spider.create(new NBANewsProcessor()).addUrl(NBANewsProcessor.url).thread(5).run();
-//		Spider.create(new Lixinji()).addUrl(Lixinji.url).addPipeline(new JsonFilePipeline("/Users/hehe")).thread(5).run();
+		// Spider.create(new
+		// ShanTouProcessor()).addUrl(ShanTouProcessor.url).thread(5).run();
+		// Spider.create(new
+		// NBANewsProcessor()).addUrl(NBANewsProcessor.url).thread(5).run();
+		// Spider.create(new Lixinji()).addUrl(Lixinji.url).addPipeline(new
+		// JsonFilePipeline("/Users/hehe")).thread(5).run();
 
 		// Spider.create(new
 		// ZhongshanProcessor()).addUrl(ZhongshanProcessor.url)
 		// .thread(5).run();
 
-		// Spider.create(new
-		// GuanghzouPublicResourceProcessor()).addUrl(GuanghzouPublicResourceProcessor.test)
-		// .thread(5).run();
+		 Spider.create(new
+		 GuanghzouPublicResourceProcessor()).addUrl(GuanghzouPublicResourceProcessor.test)
+		 .thread(5).run();
 
-		// Spider.create(new FoShangProcessor()).addUrl(FoShangProcessor.url)
-		// .thread(5).run();
+//		Spider.create(new FoShangProcessor()).addUrl(FoShangProcessor.url).thread(5).run();
 		//
 		// System.setProperty("javax.net.ssl.trustStore",
 		// "/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java/jre/lib/security/");
