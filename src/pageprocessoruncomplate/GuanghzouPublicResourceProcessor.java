@@ -3,14 +3,17 @@ package pageprocessoruncomplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import model.Project;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
+import utils.CacheHashMap;
 import utils.HibernateUtil;
 
 /**
@@ -93,6 +96,17 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 		if (page.getUrl().regex(URL_LIST).match()) {
 			System.out.println("获取列表数据");
 
+			Elements trElements = doc.getElementsByAttributeValue("class", "wsbs-table").select("tbody").select("tr");
+			System.out.println("trElements"+trElements.text().toString());
+			for (Element tr : trElements) {
+				Elements td = tr.select("td");
+				if (td.size()==3) {
+					CacheHashMap.cache.put(td.get(1).select("a").attr("href"), td.get(1).text() + "###" + td.get(2).text());
+				}
+				
+			}
+			System.out.println("CacheHashMap.cache.size()" + CacheHashMap.cache.size());
+
 			List<String> urls = page.getHtml().xpath("//td[@class=\"text_left\"]").links().regex(URL_DETAILS).all();
 			System.out.println("这个页面数据数量" + urls.size());
 
@@ -106,29 +120,35 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 			Project project = new Project();
 
 			String projectName = null;
+			String projectPublicStart = null;
 			StringBuffer article = new StringBuffer();
-			StringBuffer attach =new StringBuffer();
+			StringBuffer attach = new StringBuffer();
+
+			String value = CacheHashMap.cache.get(page.getUrl().toString());
+			projectName = value.split("###")[0];
+			projectPublicStart = value.split("###")[1];
 
 			Elements elements = doc.getElementsByAttributeValue("class", "Section1").select("p");
-			for (int i = 0; i < elements.size(); i++) {
-				projectName = elements.get(i).text().trim();
-				if (projectName != null || projectName != "") {
-					break;
-				}
-			}
+			// for (int i = 0; i < elements.size(); i++) {
+			// projectName = elements.get(i).text().trim();
+			// if (projectName != null || projectName != "") {
+			// break;
+			// }
+			// }
 			for (int i = 0; i < elements.size(); i++) {
 				article.append(elements.get(i).text()).append("\n");
 			}
-			
+
 			Elements attachElements = doc.getElementsByAttributeValue("class", "xx-main").select("font");
 			for (int i = 1; i < attachElements.size(); i++) {
-				attach.append(attachElements.get(i).text()).append(" 网址    ").append(attachElements.get(i).select("a").attr("href")).append("\n");
+				attach.append(attachElements.get(i).text()).append(" 网址    ")
+						.append(attachElements.get(i).select("a").attr("href")).append("\n");
 			}
-			
-			
+
 			project.setWebsiteType("guangzhou");
 			project.setState(0);
 			project.setProjectName(projectName);
+			project.setPublicStart(projectPublicStart);
 			project.setArticle(article.toString());
 			project.setAttach(attach.toString());
 			System.out.println(project.toString());
