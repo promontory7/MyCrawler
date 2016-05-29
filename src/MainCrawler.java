@@ -1,7 +1,3 @@
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 
 import model.Project;
 import pageprocessor.GuangdongProcessor;
@@ -12,9 +8,8 @@ import pageprocessor.ZhuHaiProcessor;
 import pageprocessoruncomplate.FoShangProcessor;
 import pageprocessoruncomplate.GuangDongTransportationProcessor;
 import pageprocessoruncomplate.GuanghzouPublicResourceProcessor;
+import pageprocessoruncomplate.ShaoguangProcessor;
 import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.pipeline.FilePipeline;
-import us.codecraft.webmagic.pipeline.JsonFilePipeline;
 
 public class MainCrawler {
 
@@ -37,8 +32,10 @@ public class MainCrawler {
 		// ZhongshanProcessor()).addUrl(ZhongshanProcessor.url)
 		// .thread(5).run();
 
-		Spider.create(new GuanghzouPublicResourceProcessor()).addUrl(GuanghzouPublicResourceProcessor.url).thread(5)
-				.run();
+//		Spider.create(new GuanghzouPublicResourceProcessor()).addUrl(GuanghzouPublicResourceProcessor.url).thread(5)
+//				.run();
+		Spider.create(new ShaoguangProcessor()).addUrl(ShaoguangProcessor.url).thread(5)
+		.run();
 
 		// Spider.create(new
 		// FoShangProcessor()).addUrl(FoShangProcessor.url).thread(5).run();

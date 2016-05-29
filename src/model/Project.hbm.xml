@@ -9,6 +9,8 @@
 			<!-- 指定主键生成器策略 -->
 			<generator class="uuid" />
 		</id>
+		<property name="url"></property>
+		<property name="time"></property>
 		<property name="websiteType"></property>
 		<property name="projectName"></property>
 		<property name="projectNo"></property>

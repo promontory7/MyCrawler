@@ -1,5 +1,6 @@
 package pageprocessoruncomplate;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
 import utils.CacheHashMap;
 import utils.HibernateUtil;
+import utils.Utils;
 
 /**
  * 广州公共资源交易网
@@ -94,6 +96,28 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 		Document doc = Jsoup.parse(page.getHtml().toString());
 
 		if (page.getUrl().regex(URL_LIST).match()) {
+			
+			String projectType=null;
+			if (page.getUrl().regex(URL_LIST1).match()) {
+				projectType="房建市政";
+			}else if (page.getUrl().regex(URL_LIST2).match()) {
+				projectType="电力";
+			}else if (page.getUrl().regex(URL_LIST3).match()) {
+				projectType="交通";
+			}else if (page.getUrl().regex(URL_LIST4).match()) {
+				projectType="铁路";
+			}else if (page.getUrl().regex(URL_LIST5).match()) {
+				projectType="水利";
+			}else if (page.getUrl().regex(URL_LIST6).match()) {
+				projectType="民航";
+			}else if (page.getUrl().regex(URL_LIST7).match()) {
+				projectType="园林";
+			}else if (page.getUrl().regex(URL_LIST8).match()) {
+				projectType="小额";
+			}else  {
+				projectType="";
+			}
+			
 			System.out.println("获取列表数据");
 
 			Elements trElements = doc.getElementsByAttributeValue("class", "wsbs-table").select("tbody").select("tr");
@@ -101,7 +125,7 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 			for (Element tr : trElements) {
 				Elements td = tr.select("td");
 				if (td.size()==3) {
-					CacheHashMap.cache.put(td.get(1).select("a").attr("href"), td.get(1).text() + "###" + td.get(2).text());
+					CacheHashMap.cache.put(td.get(1).select("a").attr("href"), td.get(1).text() + "###" + td.get(2).text()+ "###" + projectType);
 				}
 				
 			}
@@ -119,22 +143,20 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 		if (page.getUrl().regex(URL_DETAILS).match()) {
 			Project project = new Project();
 
+			String projectType=null;
 			String projectName = null;
 			String projectPublicStart = null;
 			StringBuffer article = new StringBuffer();
 			StringBuffer attach = new StringBuffer();
 
+			
 			String value = CacheHashMap.cache.get(page.getUrl().toString());
 			projectName = value.split("###")[0];
 			projectPublicStart = value.split("###")[1];
+			projectType=value.split("###")[2];
 
 			Elements elements = doc.getElementsByAttributeValue("class", "Section1").select("p");
-			// for (int i = 0; i < elements.size(); i++) {
-			// projectName = elements.get(i).text().trim();
-			// if (projectName != null || projectName != "") {
-			// break;
-			// }
-			// }
+			
 			for (int i = 0; i < elements.size(); i++) {
 				article.append(elements.get(i).text()).append("\n");
 			}
@@ -145,9 +167,12 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 						.append(attachElements.get(i).select("a").attr("href")).append("\n");
 			}
 
+			project.setTime(Utils.getcurentTime());
 			project.setWebsiteType("guangzhou");
 			project.setState(0);
+			project.setUrl(page.getUrl().toString());
 			project.setProjectName(projectName);
+			project.setProjectType(projectType);
 			project.setPublicStart(projectPublicStart);
 			project.setArticle(article.toString());
 			project.setAttach(attach.toString());
@@ -157,6 +182,7 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 		}
 	}
 
+	
 	@Override
 	public Site getSite() {
 		// TODO Auto-generated method stub

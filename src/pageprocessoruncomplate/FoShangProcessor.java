@@ -17,6 +17,7 @@ import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
 import utils.HibernateUtil;
 import utils.SessionFactoryUtil;
+import utils.Utils;
 
 public class FoShangProcessor implements PageProcessor {
 
@@ -62,15 +63,19 @@ public class FoShangProcessor implements PageProcessor {
 		}
 		if (page.getUrl().regex(URL_DETAILS).match()) {
 			Project project = new Project();
-			project.setWebsiteType("foshang");
-			project.setState(0);
+			
 			String projectName = doc.getElementsByAttributeValue("class", "contenttitle2").text();
 			Elements mElements = doc.getElementsByAttributeValue("class", "content2").select("p");
 			StringBuffer article = new StringBuffer();
 			for (Element p : mElements) {
 				article.append(p.text()).append("\n");
 			}
-
+			
+			
+			project.setWebsiteType("foshang");
+			project.setState(0);
+			project.setUrl(page.getUrl().toString());
+			project.setTime(Utils.getcurentTime());
 			project.setProjectName(projectName);
 			project.setArticle(article.toString());
 			project.setPublicStart(doc.getElementsByAttributeValue("class", "fbtime").text());
