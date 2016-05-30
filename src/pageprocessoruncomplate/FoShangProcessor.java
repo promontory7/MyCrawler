@@ -17,7 +17,7 @@ import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
 import utils.HibernateUtil;
 import utils.SessionFactoryUtil;
-import utils.Utils;
+import utils.MyUtils;
 
 public class FoShangProcessor implements PageProcessor {
 
@@ -75,7 +75,7 @@ public class FoShangProcessor implements PageProcessor {
 			project.setWebsiteType("foshang");
 			project.setState(0);
 			project.setUrl(page.getUrl().toString());
-			project.setTime(Utils.getcurentTime());
+			project.setTime(MyUtils.getcurentTime());
 			project.setProjectName(projectName);
 			project.setArticle(article.toString());
 			project.setPublicStart(doc.getElementsByAttributeValue("class", "fbtime").text());

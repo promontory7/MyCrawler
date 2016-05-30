@@ -16,7 +16,7 @@ import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
 import utils.CacheHashMap;
 import utils.HibernateUtil;
-import utils.Utils;
+import utils.MyUtils;
 
 /**
  * 广州公共资源交易网
@@ -167,7 +167,7 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 						.append(attachElements.get(i).select("a").attr("href")).append("\n");
 			}
 
-			project.setTime(Utils.getcurentTime());
+			project.setTime(MyUtils.getcurentTime());
 			project.setWebsiteType("guangzhou");
 			project.setState(0);
 			project.setUrl(page.getUrl().toString());
