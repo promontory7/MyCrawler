@@ -17,8 +17,8 @@ import utils.CacheHashMap;
 import utils.HibernateUtil;
 import utils.MyUtils;
 
-public class ShaoguangProcessor implements PageProcessor{
-	
+public class ShaoguangProcessor implements PageProcessor {
+
 	public static final String URL_LIST = "http://www\\.sgjyzx\\.com/businessAnnounceAction\\!frontBusinessAnnounceListChildren\\.do\\?businessAnnounce\\.announcetype\\=12\\&page\\=\\d+";
 	public static final String URL_DETAILS = "http://www\\.sgjyzx\\.com/businessAnnounceAction\\!frontToBusinessAnnounceForm\\.do\\?businessAnnounce\\.id=*";
 
@@ -30,7 +30,7 @@ public class ShaoguangProcessor implements PageProcessor{
 
 	private Site site = Site.me().setRetryTimes(3).setSleepTime(300);
 	private static boolean isFirst = true;
-	
+
 	@Override
 	public void process(Page page) {
 		// TODO Auto-generated method stub
@@ -38,68 +38,67 @@ public class ShaoguangProcessor implements PageProcessor{
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
 			for (int i = 2; i < 10; i++) {
-				urls.add("http://www.sgjyzx.com/businessAnnounceAction!frontBusinessAnnounceListChildren.do?businessAnnounce.announcetype=12&page=" + i);
+				urls.add(
+						"http://www.sgjyzx.com/businessAnnounceAction!frontBusinessAnnounceListChildren.do?businessAnnounce.announcetype=12&page="
+								+ i);
 			}
 			System.out.println("url的总数是：" + urls.size());
 			page.addTargetRequests(urls);
 			isFirst = true;
 		}
 		Document doc = Jsoup.parse(page.getHtml().toString());
-		
+
 		if (page.getUrl().regex(URL_LIST).match()) {
 			Elements trs = doc.getElementsByAttributeValue("class", "listPanel").select("tbody").select("tr");
 			for (Element tr : trs) {
-				Elements tds=tr.select("td");
-				if (tds.size()==3) {
-					String id=tds.get(1).select("a").toString().substring(11, 43);
-					CacheHashMap.cache.put(detailStart+id, tds.get(1).text() + "###" + tds.get(2).text());
-					page.addTargetRequest(detailStart+id);
-					System.out.println(CacheHashMap.cache.get(detailStart+id));
+				Elements tds = tr.select("td");
+				if (tds.size() == 3) {
+					String id = tds.get(1).select("a").toString().substring(11, 43);
+					CacheHashMap.cache.put(detailStart + id, tds.get(1).text() + "###" + tds.get(2).text());
+					page.addTargetRequest(detailStart + id);
+					System.out.println(CacheHashMap.cache.get(detailStart + id));
 				}
 			}
 		}
 		if (page.getUrl().regex(URL_DETAILS).match()) {
 			Elements elements = doc.getElementsByAttributeValue("class", "xx-text");
 
-			
-			Project project =new Project();
-			
-			StringBuffer projectArticle=new StringBuffer();
+			Project project = new Project();
+
+			StringBuffer projectArticle = new StringBuffer();
 			String projectName = null;
 			String projectPublicStart = null;
 
-			//表格
+			// 表格
 			Elements trs = elements.select("tbody").select("tr");
-			if (trs.size()>8) {
-				for(Element tr:trs){
-					Elements tds=tr.select("td");
-					for(int i=1;i<tds.size();i++){
+			if (trs.size() > 8) {
+				for (Element tr : trs) {
+					Elements tds = tr.select("td");
+					for (int i = 1; i < tds.size(); i++) {
 						projectArticle.append(tds.get(i).text()).append("#####");
 					}
 					projectArticle.append("\n");
 				}
 				projectArticle.append("\n\n");
 			}
-			
-			
+			MyUtils.getLineText(elements.get(0).children(), projectArticle);
+
 			String value = CacheHashMap.cache.get(page.getUrl().toString());
 			projectName = value.split("###")[0];
 			projectPublicStart = value.split("###")[1];
-			
-			
+
 			project.setTime(MyUtils.getcurentTime());
 			project.setWebsiteType("shaoguang");
 			project.setState(0);
 			project.setUrl(page.getUrl().toString());
 			project.setProjectName(projectName);
 			project.setPublicStart(projectPublicStart);
-			project.setArticle(projectArticle+elements.text());
+			project.setArticle(projectArticle.toString());
 			System.out.println(project.toString());
-			
+
 			HibernateUtil.save2Hibernate(project);
 		}
-		
-		
+
 	}
 
 	@Override

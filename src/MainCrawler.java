@@ -8,6 +8,7 @@ import pageprocessor.ZhuHaiProcessor;
 import pageprocessoruncomplate.FoShangProcessor;
 import pageprocessoruncomplate.GuangDongTransportationProcessor;
 import pageprocessoruncomplate.GuanghzouPublicResourceProcessor;
+import pageprocessoruncomplate.HeyuanProcessor;
 import pageprocessoruncomplate.ShaoguangProcessor;
 import us.codecraft.webmagic.Spider;
 
@@ -36,6 +37,10 @@ public class MainCrawler {
 //				.run();
 		Spider.create(new ShaoguangProcessor()).addUrl(ShaoguangProcessor.url).thread(5)
 		.run();
+		
+		// Spider.create(new
+		// HeyuanProcessor()).addUrl(HeyuanProcessor.url).thread(5)
+		//	.run();
 
 		// Spider.create(new
 		// FoShangProcessor()).addUrl(FoShangProcessor.url).thread(5).run();
