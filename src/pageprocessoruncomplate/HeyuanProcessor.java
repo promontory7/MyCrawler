@@ -67,13 +67,35 @@ public class HeyuanProcessor implements PageProcessor {
 			StringBuffer article = new StringBuffer();
 			Elements mElements = doc.getElementsByAttributeValue("class", "content-cnt");
 			Elements all = mElements.get(0).children();
-			System.out.println("all"+all.size());
+			System.out.println("all" + all.size());
 
-//			for (Element element : all) {
-//				article.append(element.text()).append("\n");
-//
-//			}
-			MyUtils.getLineText(all, article);
+			// for (Element element : all) {
+			// article.append(element.text()).append("\n");
+			//
+			// }
+
+			Elements trs = mElements.get(0).children().select("table").select("tbody").select("tr");
+			if (trs.size() > 3) {
+				for (Element tr : trs) {
+					Elements tds = trs.select("td");
+					for (Element td : tds) {
+						Elements childs = td.children();
+						if (childs.size() > 0) {
+							for (Element child : childs) {
+								article.append(child.text()).append("\n");
+							}
+						} else {
+							article.append(td.text()).append("\n");
+						}
+
+					}
+				}
+			} else {
+				for (Element child : all) {
+					article.append(child.text()).append("\n");
+				}
+			}
+
 			Project project = new Project();
 
 			String cacheString = CacheHashMap.cache.get(page.getUrl().toString().trim());
@@ -98,9 +120,9 @@ public class HeyuanProcessor implements PageProcessor {
 	public void getLineText(Elements elements, StringBuffer stringBuffer) {
 		for (Element element : elements) {
 			Elements childs = element.children();
-			if (childs == null || childs.size() ==0 ) {
+			if (childs == null || childs.size() == 0) {
 				stringBuffer.append(element.text()).append("\n");
-				
+
 			} else {
 				getLineText(childs, stringBuffer);
 			}

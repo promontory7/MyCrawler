@@ -1,5 +1,6 @@
 package utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -8,9 +9,24 @@ import org.jsoup.select.Elements;
 
 public class MyUtils {
 	public static String getcurentTime() {
-		Date date = new Date();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		return format.format(date);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time = sdf.format(new Date());
+		System.out.println("yyyy-MM-dd HH:mm:ss   " + time);
+		return time;
+	}
+
+	public static String getTime(String value) {
+		SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date time = null;
+		try {
+			time = s.parse(value);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return s.format(time);
+
 	}
 
 	public static void getLineText(Elements elements, StringBuffer stringBuffer) {

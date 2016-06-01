@@ -15,8 +15,6 @@ import us.codecraft.webmagic.Spider;
 public class MainCrawler {
 
 	public static void main(String[] args) {
-		// Spider.create(new
-		// GuangdongProcessor()).addUrl(GuangdongProcessor.url).thread(5).run();
 
 		// Spider.create(new ZhuHaiProcessor()).addUrl(ZhuHaiProcessor.url)
 		// .thread(5)
@@ -33,14 +31,16 @@ public class MainCrawler {
 		// ZhongshanProcessor()).addUrl(ZhongshanProcessor.url)
 		// .thread(5).run();
 
-//		Spider.create(new GuanghzouPublicResourceProcessor()).addUrl(GuanghzouPublicResourceProcessor.url).thread(5)
-//				.run();
-		Spider.create(new ShaoguangProcessor()).addUrl(ShaoguangProcessor.url).thread(5)
-		.run();
-		
 		// Spider.create(new
-		// HeyuanProcessor()).addUrl(HeyuanProcessor.url).thread(5)
-		//	.run();
+		// GuangdongProcessor()).addUrl(GuangdongProcessor.url).thread(5).run();
+
+		// Spider.create(new
+		// GuanghzouPublicResourceProcessor()).addUrl(GuanghzouPublicResourceProcessor.url).thread(5)
+		// .run();
+		Spider.create(new ShaoguangProcessor()).addUrl(ShaoguangProcessor.url).thread(5).run();
+
+		// Spider.create(new
+		// HeyuanProcessor()).addUrl(HeyuanProcessor.url).thread(5).run();
 
 		// Spider.create(new
 		// FoShangProcessor()).addUrl(FoShangProcessor.url).thread(5).run();
