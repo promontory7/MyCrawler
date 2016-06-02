@@ -69,20 +69,8 @@ public class ShaoguangProcessor implements PageProcessor {
 			String projectName = null;
 			String projectPublicStart = null;
 
-			// 表格
-			// Elements trs = elements.select("tbody").select("tr");
-			// if (trs.size() > 8) {
-			// for (Element tr : trs) {
-			// Elements tds = tr.select("td");
-			// for (int i = 1; i < tds.size(); i++) {
-			// projectArticle.append(tds.get(i).text()).append("#####");
-			// }
-			// projectArticle.append("\n");
-			// }
-			// projectArticle.append("\n\n");
-			// }
 
-			if (elements.get(0).select("div").size() > 2) {
+			if (elements.get(0).select("div").size() > 1) {
 				for (Element element : elements.get(0).children()) {
 					if (element.nodeName().equals("div")) {
 						for (Element p : element.children()) {
@@ -102,9 +90,44 @@ public class ShaoguangProcessor implements PageProcessor {
 										projectArticle.append(d.text()).append("\n");
 									}
 								}
+							} else if (p.nodeName().equals("table")) {
+
+								Elements trs = p.select("tbody").select("tr");
+								for (Element tr : trs) {
+									for (Element td : tr.select("td")) {
+										for (Element last : td.children()) {
+											projectArticle.append(last.text()).append("\n");
+										}
+									}
+								}
 							} else {
 								projectArticle.append(p.text()).append("\n");
 							}
+						}
+					} else {
+						projectArticle.append(element.text()).append("\n");
+					}
+				}
+			} else if (elements.get(0).select("table").size() > 0) {
+				for (Element element : elements.get(0).children()) {
+					if (element.nodeName().equals("table")) {
+						Elements trs = element.select("tbody").select("tr");
+						for (Element tr : trs) {
+							for (Element td : tr.select("td")) {
+								for (Element last : td.children()) {
+									projectArticle.append(last.text()).append("\n");
+								}
+							}
+						}
+					} else {
+						projectArticle.append(element.text()).append("\n");
+					}
+				}
+			} else {
+				for (Element element : elements.get(0).children()) {
+					if (element.children().size() > 0) {
+						for (Element child : element.children()) {
+							projectArticle.append(child.text()).append("\n");
 						}
 					} else {
 						projectArticle.append(element.text()).append("\n");
