@@ -32,7 +32,7 @@
 		<property name="agecyPhone"></property>
 		<property name="bond"></property>
 		<property name="bonder"></property>
-		<property name="isAcceptUnion"></property>
+		<property name="isAcceptUnion" length="4000"></property>
 		<property name="qualification_requir"></property>
 		<property name="manager_require"></property>
 		<property name="article" length="4000"></property>

@@ -9,6 +9,7 @@ import pageprocessoruncomplate.FoShangProcessor;
 import pageprocessoruncomplate.GuangDongTransportationProcessor;
 import pageprocessoruncomplate.GuanghzouPublicResourceProcessor;
 import pageprocessoruncomplate.HeyuanProcessor;
+import pageprocessoruncomplate.MeizhouProcessor;
 import pageprocessoruncomplate.ShaoguangProcessor;
 import us.codecraft.webmagic.Spider;
 
@@ -33,18 +34,25 @@ public class MainCrawler {
 
 		// Spider.create(new
 		// GuangdongProcessor()).addUrl(GuangdongProcessor.url).thread(5).run();
+		// Spider.create(new
+		// GuangDongTransportationProcessor()).addUrl(GuangDongTransportationProcessor.test).thread(5)
+		// .run();
 
 		// Spider.create(new
 		// GuanghzouPublicResourceProcessor()).addUrl(GuanghzouPublicResourceProcessor.url).thread(5)
 		// .run();
-		Spider.create(new ShaoguangProcessor()).addUrl(ShaoguangProcessor.url).thread(5).run();
+
+		Spider.create(new MeizhouProcessor()).addUrl(MeizhouProcessor.url).thread(5).run();
+
+		// Spider.create(new
+		// ShaoguangProcessor()).addUrl(ShaoguangProcessor.url).thread(5).run();
 
 		// Spider.create(new
 		// HeyuanProcessor()).addUrl(HeyuanProcessor.url).thread(5).run();
 
 		// Spider.create(new
 		// FoShangProcessor()).addUrl(FoShangProcessor.url).thread(5).run();
-		//
+
 		// System.setProperty("javax.net.ssl.trustStore",
 		// "/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java/jre/lib/security/");
 		//

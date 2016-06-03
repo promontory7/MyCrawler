@@ -44,7 +44,7 @@ public class ShaoguangProcessor implements PageProcessor {
 			}
 			System.out.println("url的总数是：" + urls.size());
 			page.addTargetRequests(urls);
-			isFirst = true;
+			isFirst = false;
 		}
 		Document doc = Jsoup.parse(page.getHtml().toString());
 
