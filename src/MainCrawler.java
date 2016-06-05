@@ -34,15 +34,15 @@ public class MainCrawler {
 
 		// Spider.create(new
 		// GuangdongProcessor()).addUrl(GuangdongProcessor.url).thread(5).run();
-		// Spider.create(new
-		// GuangDongTransportationProcessor()).addUrl(GuangDongTransportationProcessor.test).thread(5)
-		// .run();
+		Spider.create(new GuangDongTransportationProcessor()).addUrl(GuangDongTransportationProcessor.url).thread(5)
+				.run();
 
 		// Spider.create(new
 		// GuanghzouPublicResourceProcessor()).addUrl(GuanghzouPublicResourceProcessor.url).thread(5)
 		// .run();
 
-		Spider.create(new MeizhouProcessor()).addUrl(MeizhouProcessor.url).thread(5).run();
+		// Spider.create(new
+		// MeizhouProcessor()).addUrl(MeizhouProcessor.url).thread(5).run();
 
 		// Spider.create(new
 		// ShaoguangProcessor()).addUrl(ShaoguangProcessor.url).thread(5).run();
