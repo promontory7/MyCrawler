@@ -31,7 +31,7 @@ public class Huizhouprocessor implements PageProcessor {
 	@Override
 	public void process(Page page) {
 		// TODO Auto-generated method stub
-		Document doc = Jsoup.parse(page.getHtml().toString());
+		Document doc = Jsoup.parse(page.getHtml().getFirstSourceText());
 
 		if (isFirst) {
 			System.out.println("添加所有列表链接");

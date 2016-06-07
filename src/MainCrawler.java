@@ -5,6 +5,7 @@ import pageprocessor.Lixinji;
 import pageprocessor.ShanTouProcessor;
 import pageprocessor.ZhongshanProcessor;
 import pageprocessor.ZhuHaiProcessor;
+import pageprocessoruncomplate.DongguanProcessor;
 import pageprocessoruncomplate.FoShangProcessor;
 import pageprocessoruncomplate.GuangDongTransportationProcessor;
 import pageprocessoruncomplate.GuanghzouPublicResourceProcessor;
@@ -35,12 +36,15 @@ public class MainCrawler {
 
 		// Spider.create(new
 		// GuangdongProcessor()).addUrl(GuangdongProcessor.url).thread(5).run();
-//		Spider.create(new GuangDongTransportationProcessor()).addUrl(GuangDongTransportationProcessor.url).thread(5)
-//				.run();
-		
-		Spider.create(new Huizhouprocessor()).addUrl(Huizhouprocessor.url).thread(5)
-		.run();
+		// Spider.create(new
+		// GuangDongTransportationProcessor()).addUrl(GuangDongTransportationProcessor.url).thread(5)
+		// .run();
 
+		// Spider.create(new
+		// Huizhouprocessor()).addUrl(Huizhouprocessor.url).thread(5)
+		// .run();
+
+		Spider.create(new DongguanProcessor()).addUrl(DongguanProcessor.url).thread(5).run();
 
 		// Spider.create(new
 		// GuanghzouPublicResourceProcessor()).addUrl(GuanghzouPublicResourceProcessor.url).thread(5)
