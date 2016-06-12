@@ -13,6 +13,7 @@ import pageprocessoruncomplate.HeyuanProcessor;
 import pageprocessoruncomplate.Huizhouprocessor;
 import pageprocessoruncomplate.MeizhouProcessor;
 import pageprocessoruncomplate.ShaoguangProcessor;
+import pageprocessoruncomplate.jiangmenProcessor;
 import us.codecraft.webmagic.Spider;
 
 public class MainCrawler {
@@ -44,7 +45,8 @@ public class MainCrawler {
 		// Huizhouprocessor()).addUrl(Huizhouprocessor.url).thread(5)
 		// .run();
 
-		Spider.create(new DongguanProcessor()).addUrl(DongguanProcessor.url).thread(5).run();
+//		Spider.create(new DongguanProcessor()).addUrl(DongguanProcessor.url).thread(5).run();
+		Spider.create(new jiangmenProcessor()).addUrl(jiangmenProcessor.url).thread(5).run();
 
 		// Spider.create(new
 		// GuanghzouPublicResourceProcessor()).addUrl(GuanghzouPublicResourceProcessor.url).thread(5)

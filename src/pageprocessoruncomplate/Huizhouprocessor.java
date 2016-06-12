@@ -67,8 +67,6 @@ public class Huizhouprocessor implements PageProcessor {
 
 		if (page.getUrl().regex(URL_DETAILS).match()) {
 			Project project = new Project();
-			String project_name = null;
-			String project_publicStart = null;
 			StringBuffer project_article = new StringBuffer();
 			System.out.println("======="+page.getUrl()+"===========");
 			String[] value = CacheHashMap.cache.get(page.getUrl().toString().trim()).split("###");
