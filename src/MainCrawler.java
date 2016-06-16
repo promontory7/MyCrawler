@@ -11,8 +11,12 @@ import pageprocessoruncomplate.GuangDongTransportationProcessor;
 import pageprocessoruncomplate.GuanghzouPublicResourceProcessor;
 import pageprocessoruncomplate.HeyuanProcessor;
 import pageprocessoruncomplate.Huizhouprocessor;
+import pageprocessoruncomplate.MaomingProcessor;
 import pageprocessoruncomplate.MeizhouProcessor;
+import pageprocessoruncomplate.QingyuanProcessor;
 import pageprocessoruncomplate.ShaoguangProcessor;
+import pageprocessoruncomplate.YangjiangProcessor;
+import pageprocessoruncomplate.ZhaoqingPrecessor;
 import pageprocessoruncomplate.jiangmenProcessor;
 import us.codecraft.webmagic.Spider;
 
@@ -46,7 +50,18 @@ public class MainCrawler {
 		// .run();
 
 //		Spider.create(new DongguanProcessor()).addUrl(DongguanProcessor.url).thread(5).run();
-		Spider.create(new jiangmenProcessor()).addUrl(jiangmenProcessor.url).thread(5).run();
+		
+//		Spider.create(new YangjiangProcessor()).addUrl(YangjiangProcessor.url).thread(5).run();
+		
+//		Spider.create(new MaomingProcessor()).addUrl(MaomingProcessor.url).thread(5).run();
+
+//		Spider.create(new ZhaoqingPrecessor()).addUrl(MaomingProcessor.url).thread(5).run();
+		
+		Spider.create(new QingyuanProcessor()).addUrl(QingyuanProcessor.url).thread(5).run();
+
+
+		
+//		Spider.create(new jiangmenProcessor()).addUrl(jiangmenProcessor.url).thread(5).run();
 
 		// Spider.create(new
 		// GuanghzouPublicResourceProcessor()).addUrl(GuanghzouPublicResourceProcessor.url).thread(5)

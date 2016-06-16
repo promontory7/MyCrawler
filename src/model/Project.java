@@ -31,6 +31,7 @@ public class Project {
 	public String manager_require; // 项目负责人要求
 	public String attach; // 附件地址
 	public String article; // 全文
+	public String rawHtml;   //html原文
 	public int state;// 是否已处理
 
 	public String getId() {
@@ -247,6 +248,15 @@ public class Project {
 
 	public void setArticle(String article) {
 		this.article = article;
+	}
+
+	
+	public String getRawHtml() {
+		return rawHtml;
+	}
+
+	public void setRawHtml(String rawHtml) {
+		this.rawHtml = rawHtml;
 	}
 
 	public int getState() {

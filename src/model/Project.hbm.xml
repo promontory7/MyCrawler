@@ -36,6 +36,7 @@
 		<property name="qualification_requir"></property>
 		<property name="manager_require"></property>
 		<property name="article" length="4000"></property>
+		<property name="rawHtml" length="8000"></property>
 		<property name="attach" length="4000"></property>
 		<property name="state"></property>
 	</class>
