@@ -40,8 +40,8 @@ public class QingyuanProcessor implements PageProcessor {
 		if (isFirst) {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
-			// 20
-			for (int i = 2; i < 10; i++) {
+			// 24
+			for (int i = 2; i < 20; i++) {
 				urls.add("http://www.qyggzy.cn/webIndex/newsLeftBoard/0102/010201?pageNO=" + i);
 			}
 			page.addTargetRequests(urls);
@@ -88,6 +88,7 @@ public class QingyuanProcessor implements PageProcessor {
 			}
 
 			Element div = doc.getElementById("context_div");
+			String rawhtml =div.toString();
 			project.setRawHtml(div.toString());
 			for (Element p : div.children()) {
 				if (p.nodeName().equals("table")) {
@@ -108,8 +109,8 @@ public class QingyuanProcessor implements PageProcessor {
 
 								} else if (tabletr.select("td").size() == 3) {
 									Elements tds = tabletr.select("td");
-									project_attach.append(tds.get(2).text()).append("  ###   ").append(tds.get(2).select("a").attr("href"))
-											.append("\n");
+									project_attach.append(tds.get(2).text()).append("  ###   ")
+											.append(tds.get(2).select("a").attr("href")).append("\n");
 								} else {
 									project_article.append(tabletr.text()).append("\n");
 
@@ -124,10 +125,11 @@ public class QingyuanProcessor implements PageProcessor {
 			}
 			project.setUrl(page.getUrl().toString().trim());
 			project.setState(0);
-			project.setWebsiteType("清远");
+			project.setWebsiteType("清远市");
 			project.setTime(MyUtils.getcurentTime());
 			project.setAttach(project_attach.toString());
 			project.setArticle(project_article.toString());
+			project.setRawHtml(rawhtml);
 			System.out.println(project);
 
 			HibernateUtil.save2Hibernate(project);

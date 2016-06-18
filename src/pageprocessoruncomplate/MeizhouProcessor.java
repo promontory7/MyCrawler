@@ -54,7 +54,7 @@ public class MeizhouProcessor implements PageProcessor {
 				String url = li.select("a").attr("href").trim();
 				page.addTargetRequest(url);
 				CacheHashMap.cache.put(url, li.select("a").text().trim() + "###" + li.select("span").text().trim());
-				System.out.println(CacheHashMap.cache.get(url));
+//				System.out.println(CacheHashMap.cache.get(url));
 			}
 		}
 		if (page.getUrl().regex(URL_DETAILS).match()) {
@@ -66,33 +66,6 @@ public class MeizhouProcessor implements PageProcessor {
 			String projectName = null;
 			String projectPublicStart = null;
 
-//			Elements elements = doc.getElementsByAttributeValue("class", "size13");
-//			if (elements != null && elements.size() > 0) {
-//				if (elements.get(0).select("div").size() > 0) {
-//					for (Element child : elements.get(0).children()) {
-//						if (child.nodeName().equals("div")) {
-//							for (Element last : child.children()) {
-//								projectArticle.append(last.text().trim()).append("\n");
-//							}
-//						} else {
-//							projectArticle.append(child.text().trim()).append("\n");
-//						}
-//					}
-//
-//				} else if (elements.get(0).select("table").size() > 0) {
-//					Elements ps = elements.get(0).getElementsByAttributeValue("class", "WordSection1");
-//					for (Element p : ps.get(0).children()) {
-//						projectArticle.append(p.text().trim()).append("\n");
-//					}
-//
-//				} else {
-//					for (Element p : elements.get(0).children()) {
-//						projectArticle.append(p.text().trim()).append("\n");
-//					}
-//				}
-//			} else {
-//				System.out.println("--------------------------------------" + page.getUrl().toString());
-//			}
 			Elements elements = doc.getElementsByAttributeValue("class", "MsoNormal");
 			for(Element element:elements){
 				projectArticle.append(element.text().trim()).append("\n");
@@ -101,14 +74,17 @@ public class MeizhouProcessor implements PageProcessor {
 			String value = CacheHashMap.cache.get(page.getUrl().toString());
 			projectName = value.split("###")[0];
 			projectPublicStart = value.split("###")[1];
+			
+			String rawhtml =doc.getElementsByAttributeValue("class", "zhengwen").toString();
 
 			project.setTime(MyUtils.getcurentTime());
-			project.setWebsiteType("meizhou");
+			project.setWebsiteType("梅州市");
 			project.setState(0);
 			project.setUrl(page.getUrl().toString());
 			project.setProjectName(projectName);
 			project.setPublicStart(projectPublicStart);
 			project.setArticle(projectArticle.toString());
+			project.setRawHtml(rawhtml);
 			System.out.println(project.toString());
 
 			HibernateUtil.save2Hibernate(project);

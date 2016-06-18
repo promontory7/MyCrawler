@@ -41,7 +41,7 @@ public class ZhaoqingPrecessor implements PageProcessor {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
 			// 48
-			for (int i = 1; i < 20; i++) {
+			for (int i = 1; i < 40; i++) {
 				urls.add("http://ggzy.zhaoqing.gov.cn/ggzyjy/jzgcjy/jyggjs/index_" + i + ".html");
 			}
 			page.addTargetRequests(urls);
@@ -77,13 +77,14 @@ public class ZhaoqingPrecessor implements PageProcessor {
 
 				}
 			}
+		
 
 			project.setProjectName(project_name);
 			project.setPublicStart(project_publicStart);
 			project.setArticle(project_article.toString());
 			project.setUrl(page.getUrl().toString().trim());
 			project.setState(0);
-			project.setWebsiteType("肇庆");
+			project.setWebsiteType("肇庆市");
 			project.setTime(MyUtils.getcurentTime());
 			project.setRawHtml(main.toString());
 

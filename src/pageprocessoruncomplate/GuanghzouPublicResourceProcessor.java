@@ -115,7 +115,7 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 			}else if (page.getUrl().regex(URL_LIST8).match()) {
 				projectType="小额";
 			}else  {
-				projectType="";
+				projectType="其他";
 			}
 			
 			System.out.println("获取列表数据");
@@ -148,6 +148,7 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 			String projectPublicStart = null;
 			StringBuffer article = new StringBuffer();
 			StringBuffer attach = new StringBuffer();
+			String rawhtml=null;
 
 			
 			String value = CacheHashMap.cache.get(page.getUrl().toString());
@@ -163,12 +164,14 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 
 			Elements attachElements = doc.getElementsByAttributeValue("class", "xx-main").select("font");
 			for (int i = 1; i < attachElements.size(); i++) {
-				attach.append(attachElements.get(i).text()).append(" 网址    ")
+				attach.append(attachElements.get(i).text()).append(" ### ")
 						.append(attachElements.get(i).select("a").attr("href")).append("\n");
 			}
 
+			rawhtml=doc.getElementsByAttributeValue("class", "Section1").toString();
+			
 			project.setTime(MyUtils.getcurentTime());
-			project.setWebsiteType("guangzhou");
+			project.setWebsiteType("广州市");
 			project.setState(0);
 			project.setUrl(page.getUrl().toString());
 			project.setProjectName(projectName);
@@ -176,6 +179,7 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 			project.setPublicStart(projectPublicStart);
 			project.setArticle(article.toString());
 			project.setAttach(attach.toString());
+			project.setRawHtml(rawhtml);
 			System.out.println(project.toString());
 
 			HibernateUtil.save2Hibernate(project);

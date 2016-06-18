@@ -40,8 +40,8 @@ public class jiangmenProcessor implements PageProcessor {
 		if (isFirst) {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
-			// 30
-			for (int i = 2; i < 20; i++) {
+			// 33
+			for (int i = 2; i < 30; i++) {
 				urls.add("http://zyjy.jiangmen.gov.cn//szqjszbgg/index_"+i+".htm");
 			}
 			page.addTargetRequests(urls);
@@ -94,8 +94,9 @@ public class jiangmenProcessor implements PageProcessor {
 			}
 			project.setUrl(page.getUrl().toString().trim());
 			project.setState(0);
-			project.setWebsiteType("jiangmen");
+			project.setWebsiteType("江门市");
 			project.setTime(MyUtils.getcurentTime());
+			project.setRawHtml(divs.toString());
 
 			project.setArticle(project_article.toString());
 			System.out.println(project);

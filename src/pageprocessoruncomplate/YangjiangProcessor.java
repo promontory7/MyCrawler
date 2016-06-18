@@ -24,7 +24,7 @@ public class YangjiangProcessor implements PageProcessor {
 	public static String url = "http://www.yjggzy.cn/Query/JsgcBidAfficheQuery2/d4f193435ad04447a997719474139181?page=1";
 	public static String test = "http://www.yjggzy.cn/Details/JsgcDetails/59fe6f287a404cbea10c40c300e915f9";
 
-	private Site site = Site.me().setRetryTimes(3).setTimeOut(20000).setSleepTime(300);
+	private Site site = Site.me().setRetryTimes(3).setTimeOut(30000).setSleepTime(300);
 	private static boolean isFirst = true;
 
 	@Override
@@ -41,8 +41,8 @@ public class YangjiangProcessor implements PageProcessor {
 		if (isFirst) {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
-			// 30
-			for (int i = 2; i < 20; i++) {
+			// 80
+			for (int i = 2; i < 30; i++) {
 				urls.add("http://www.yjggzy.cn/Query/JsgcBidAfficheQuery2/d4f193435ad04447a997719474139181?page=" + i);
 			}
 			page.addTargetRequests(urls);
@@ -72,7 +72,7 @@ public class YangjiangProcessor implements PageProcessor {
 				}
 				CacheHashMap.cache.put(url, title + "###" + data);
 				page.addTargetRequest(url);
-				System.out.println(url + "  " + CacheHashMap.cache.get(url));
+//				System.out.println(url + "  " + CacheHashMap.cache.get(url));
 
 			}
 
@@ -84,6 +84,7 @@ public class YangjiangProcessor implements PageProcessor {
 			StringBuffer project_article = new StringBuffer();
 
 			String urldetails = CacheHashMap.cache.get(page.getUrl().toString().trim());
+			String rawhtml =doc.getElementsByAttributeValue("class", "acticle").toString();
 
 			String[] value = urldetails.split("###");
 			if (value != null && value.length > 1) {
@@ -97,8 +98,9 @@ public class YangjiangProcessor implements PageProcessor {
 			}
 			project.setUrl(page.getUrl().toString().trim());
 			project.setState(0);
-			project.setWebsiteType("yangjiang");
+			project.setWebsiteType("阳江市");
 			project.setTime(MyUtils.getcurentTime());
+			project.setRawHtml(rawhtml);
 
 			project.setArticle(project_article.toString());
 			System.out.println(project);
@@ -124,12 +126,15 @@ public class YangjiangProcessor implements PageProcessor {
 			for (Element p : div.children()) {
 				project_article.append(p.text()).append("\n");
 			}
+			String rawhtml =div.toString();
 			project.setUrl(page.getUrl().toString().trim());
 			project.setState(0);
-			project.setWebsiteType("yangjiang");
+			project.setWebsiteType("阳江市");
 			project.setTime(MyUtils.getcurentTime());
-
+			
 			project.setArticle(project_article.toString());
+			project.setRawHtml(rawhtml);
+			
 			System.out.println(project);
 
 			HibernateUtil.save2Hibernate(project);

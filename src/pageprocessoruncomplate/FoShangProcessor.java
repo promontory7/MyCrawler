@@ -31,18 +31,19 @@ public class FoShangProcessor implements PageProcessor {
 
 	public static String test = "http://www.fsggzy.cn/gcjy/gc_zbxx/gc_zbsz/201603/t20160325_5552037.html";
 
-	private Site site = Site.me().setRetryTimes(3).setSleepTime(300);
+	private Site site = Site.me().setRetryTimes(3).setTimeOut(20000).setSleepTime(100);
 	private static boolean isFirst = true;
 
 	@Override
-	public void process(Page page) {
+	public void process(Page page){
 		// TODO Auto-generated method stub
 		Document doc = Jsoup.parse(page.getHtml().toString());
 
 		if (isFirst) {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
-			for (int i = 1; i < 5; i++) {
+			//50
+			for (int i = 1; i < 40; i++) {
 				urls.add("http://www.fsggzy.cn/gcjy/gc_zbxx/gc_zbsz/index_" + i + ".html");
 				urls.add("http://www.fsggzy.cn/gcjy/gc_zbxx/jygg_gq/index_" + i + ".html");
 			}
@@ -64,7 +65,9 @@ public class FoShangProcessor implements PageProcessor {
 		if (page.getUrl().regex(URL_DETAILS).match()) {
 			Project project = new Project();
 			
-			String projectName = doc.getElementsByAttributeValue("class", "contenttitle2").text();
+			String projectRAWHtml =doc.getElementsByAttributeValue("class", "contentrightlistbox2").toString();
+			String projectName = doc.getElementsByAttributeValue("class", "contenttitle2").select("h3").text();
+			String projectPublicStart =doc.getElementsByAttributeValue("class", "fbtime").text();
 			Elements mElements = doc.getElementsByAttributeValue("class", "content2").select("p");
 			StringBuffer article = new StringBuffer();
 			for (Element p : mElements) {
@@ -72,13 +75,14 @@ public class FoShangProcessor implements PageProcessor {
 			}
 			
 			
-			project.setWebsiteType("foshang");
+			project.setWebsiteType("佛山市");
 			project.setState(0);
 			project.setUrl(page.getUrl().toString());
 			project.setTime(MyUtils.getcurentTime());
 			project.setProjectName(projectName);
+			project.setPublicStart(projectPublicStart);
 			project.setArticle(article.toString());
-			project.setPublicStart(doc.getElementsByAttributeValue("class", "fbtime").text());
+			project.setRawHtml(projectRAWHtml);
 			System.out.println(project.toString());
 
 			HibernateUtil.save2Hibernate(project);

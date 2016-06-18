@@ -2,6 +2,7 @@ package pageprocessoruncomplate;
 
 import java.util.ArrayList;
 
+import org.hibernate.sql.Select;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -40,7 +41,7 @@ public class MaomingProcessor implements PageProcessor {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
 			// 18
-			for (int i = 2; i < 10; i++) {
+			for (int i = 2; i < 15; i++) {
 				urls.add(
 						"http://mmgpc.maoming.gov.cn/mmzbtb/jyxx/033001/033001001/033001001001/033001001001001/?Paging="
 								+ i);
@@ -95,8 +96,9 @@ public class MaomingProcessor implements PageProcessor {
 			}
 			project.setUrl(page.getUrl().toString().trim());
 			project.setState(0);
-			project.setWebsiteType("maoming");
+			project.setWebsiteType("茂名市");
 			project.setTime(MyUtils.getcurentTime());
+			project.setRawHtml(td.select("div").get(0).toString());
 
 			project.setArticle(project_article.toString());
 			System.out.println(project);

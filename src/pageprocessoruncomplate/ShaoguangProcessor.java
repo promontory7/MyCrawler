@@ -37,7 +37,8 @@ public class ShaoguangProcessor implements PageProcessor {
 		if (isFirst) {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
-			for (int i = 2; i < 10; i++) {
+			// 25
+			for (int i = 2; i < 20; i++) {
 				urls.add(
 						"http://www.sgjyzx.com/businessAnnounceAction!frontBusinessAnnounceListChildren.do?businessAnnounce.announcetype=12&page="
 								+ i);
@@ -68,7 +69,7 @@ public class ShaoguangProcessor implements PageProcessor {
 			StringBuffer projectArticle = new StringBuffer();
 			String projectName = null;
 			String projectPublicStart = null;
-
+			String rawhtml = elements.toString();
 
 			if (elements.get(0).select("div").size() > 1) {
 				for (Element element : elements.get(0).children()) {
@@ -142,12 +143,13 @@ public class ShaoguangProcessor implements PageProcessor {
 			projectPublicStart = value.split("###")[1];
 
 			project.setTime(MyUtils.getcurentTime());
-			project.setWebsiteType("shaoguang");
+			project.setWebsiteType("韶关市");
 			project.setState(0);
 			project.setUrl(page.getUrl().toString());
 			project.setProjectName(projectName);
 			project.setPublicStart(projectPublicStart);
 			project.setArticle(projectArticle.toString());
+			project.setRawHtml(rawhtml);
 			System.out.println(project.toString());
 
 			HibernateUtil.save2Hibernate(project);

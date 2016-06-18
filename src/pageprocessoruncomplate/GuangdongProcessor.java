@@ -1,4 +1,4 @@
-package pageprocessor;
+package pageprocessoruncomplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,8 @@ import model.Project;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
+import utils.HibernateUtil;
+import utils.MyUtils;
 import utils.SessionFactoryUtil;
 
 /**
@@ -36,42 +38,41 @@ public class GuangdongProcessor implements PageProcessor {
 	private static boolean isFirst = true;
 
 	@Override
-	public void process(Page page) { 
-	
-//		System.out.print(page.getHtml().toString());
-		
-		if(isFirst){
+	public void process(Page page) {
+
+		// System.out.print(page.getHtml().toString());
+
+		if (isFirst) {
 			System.out.println("添加所有列表链接");
-			ArrayList<String> urls =new ArrayList<String>();
-			for(int i=1;i<3;i++){
-				urls.add("http://www.gdzbtb.gov.cn/zhaobiao12/index_"+i+".htm");
+			ArrayList<String> urls = new ArrayList<String>();
+			//500
+			for (int i = 1; i < 480; i++) {
+				urls.add("http://www.gdzbtb.gov.cn/zhaobiao12/index_" + i + ".htm");
 			}
 			page.addTargetRequests(urls);
-			isFirst=false;
+			isFirst = false;
 		}
-		
+
 		if (page.getUrl().regex(URL_LIST).match()) {
 			System.out.println("开始处理");
 
 			List<String> urls = page.getHtml().xpath("//ul[@class=\"position2\"]").links().regex(URL_DETAILS).all();
 			System.out.println(urls.size());
-			if(urls!=null&&urls.size()>0){
+			if (urls != null && urls.size() > 0) {
 				page.addTargetRequests(urls);
 			}
-	
-			
-		}else 
-		{
 
-			Project project =new Project();
+		} else {
+
+			Project project = new Project();
 			Document doc = Jsoup.parse(page.getHtml().toString());
-//			System.out.println(doc.body());
-			
+			// System.out.println(doc.body());
+
 			Elements td = doc.getElementsByAttributeValue("class", "cn03");
-			Elements tr =doc.getElementsByAttributeValue("class","cn20_1");
-			
-			for(int i=0;i<tr.size();i++){
-				System.out.println(tr.get(i).text()+"   :"+td.get(i).text());
+			Elements tr = doc.getElementsByAttributeValue("class", "cn20_1");
+			String rawhtml = doc.getElementById("article").toString();
+
+			for (int i = 0; i < tr.size(); i++) {
 				if (tr.get(i).text().equals("项目名称")) {
 					project.setProjectName(td.get(i).text());
 				}
@@ -81,7 +82,7 @@ public class GuangdongProcessor implements PageProcessor {
 				if (tr.get(i).text().equals("项目所在地区")) {
 					project.setProjectAddress(td.get(i).text());
 				}
-				
+
 				if (tr.get(i).text().equals("招标类型")) {
 					project.setProjectType(td.get(i).text());
 				}
@@ -95,34 +96,31 @@ public class GuangdongProcessor implements PageProcessor {
 					project.setAttach(td.get(i).select("a").attr("href"));
 				}
 				if (tr.get(i).text().equals("公告内容")) {
-					
-					Elements d =td.get(i).select("div").select("p");
-					StringBuffer stringBuffer =new StringBuffer();
-					for(Element e:d){
-						stringBuffer.append(e.text()).append("\n");
+					if (td.get(i).select("div") != null && td.get(i).select("div").size() > 0) {
+						Elements d = td.get(i).select("div").select("p");
+						StringBuffer stringBuffer = new StringBuffer();
+						for (Element e : d) {
+							stringBuffer.append(e.text()).append("\n");
+						}
+						project.setArticle(stringBuffer.toString());
+					} else {
+						Elements d = td.get(i).select("p");
+						StringBuffer stringBuffer = new StringBuffer();
+						for (Element e : d) {
+							stringBuffer.append(e.text()).append("\n");
+						}
+						project.setArticle(stringBuffer.toString());
 					}
-					project.setArticle(stringBuffer.toString());
 				}
-				
 			}
-			
-			SessionFactory sf =SessionFactoryUtil.getInstance();
-			Session s = null;
-			Transaction t = null;
-	
-			try {
-				s = sf.openSession();
-				t = s.beginTransaction();
-				s.save(project);
-				t.commit();
-			} catch (Exception err) {
-				t.rollback();
-				err.printStackTrace();
-			} finally {
-				s.close();
-			}
-			}
+			project.setUrl(page.getUrl().toString());
+			project.setRawHtml(rawhtml);
+			project.setTime(MyUtils.getcurentTime());
+			project.setWebsiteType("广东省");
+
+			HibernateUtil.save2Hibernate(project);
 		}
+	}
 
 	@Override
 	public Site getSite() {

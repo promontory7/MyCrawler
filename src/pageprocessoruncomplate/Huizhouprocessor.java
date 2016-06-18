@@ -79,10 +79,13 @@ public class Huizhouprocessor implements PageProcessor {
 			for (Element p : divzoom.children()) {
 				project_article.append(p.text()).append("\n");
 			}
+			
+			String  rawhtml =doc.getElementById("div_view").toString();
 			project.setUrl(page.getUrl().toString().trim());
 			project.setState(0);
-			project.setWebsiteType("huizhou");
+			project.setWebsiteType("惠州市");
 			project.setTime(MyUtils.getcurentTime());
+			project.setRawHtml(rawhtml);
 
 			project.setArticle(project_article.toString());
 			System.out.println(project);

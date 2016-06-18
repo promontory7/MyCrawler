@@ -32,7 +32,7 @@ public class GuangDongTransportationProcessor implements PageProcessor {
 
 	public static String test = "http://www.gdcd.gov.cn/gkzb/20130813162357229_1.jhtml";
 
-	private Site site = Site.me().setRetryTimes(3).setSleepTime(300);
+	private Site site = Site.me().setRetryTimes(3).setTimeOut(20000).setSleepTime(300);
 	private static boolean isFirst = true;
 
 	@Override
@@ -43,8 +43,8 @@ public class GuangDongTransportationProcessor implements PageProcessor {
 		if (isFirst) {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
-			// 20
-			for (int i = 2; i < 5; i++) {
+			// 29
+			for (int i = 2; i < 25; i++) {
 				urls.add("http://www.gdcd.gov.cn/gkzb/index_" + i + ".jhtml");
 			}
 			page.addTargetRequests(urls);
@@ -66,6 +66,7 @@ public class GuangDongTransportationProcessor implements PageProcessor {
 			String project_name = null;
 			String project_publicStart = null;
 			StringBuffer project_article = new StringBuffer();
+			StringBuffer project_attach=new StringBuffer();
 
 			Elements elements = doc.getElementsByAttributeValue("class", "detail_title");
 			Elements h1s = elements.select("h1");
@@ -77,6 +78,7 @@ public class GuangDongTransportationProcessor implements PageProcessor {
 				project_publicStart = spans.get(1).text();
 			}
 
+			String rawHtml=doc.getElementsByAttributeValue("class", "detail_content").text();
 			// 通过这个方法找到 mian 标签，无法直接获得
 			Element main = doc.getElementsByAttributeValue("class", "detail_content").select("maincontent").get(0)
 					.children().get(3);
@@ -174,14 +176,24 @@ public class GuangDongTransportationProcessor implements PageProcessor {
 					project_article.append(element.text()).append("\n");
 				}
 			}
+			
+			Elements lis=doc.getElementsByAttributeValue("class", "otherPages");
+			if (lis!=null&&lis.size()>0) {
+			    for(Element li:lis){
+			    	project_attach.append(li.text()).append("  ###   ").append(li.select("a").attr("href").trim());
+			    }
+				
+			}
 
 			project.setUrl(page.getUrl().toString());
 			project.setState(0);
-			project.setWebsiteType("guangdong_transportation");
+			project.setWebsiteType("广东交通运输厅");
 			project.setTime(MyUtils.getcurentTime());
 			project.setProjectName(project_name);
 			project.setPublicStart(project_publicStart);
 			project.setArticle(project_article.toString());
+			project.setRawHtml(rawHtml);
+//			project.setAttach(project_attach.toString());
 			System.out.println(project);
 
 			HibernateUtil.save2Hibernate(project);
