@@ -25,7 +25,7 @@ public class Huizhouprocessor implements PageProcessor {
 
 	public static String test = "http://zyjy.huizhou.gov.cn/pages/cms/hzggzyjyzx/html/zbgg_xq/ec4fe0184fa54eb99f83b1b544b40bb1.html?cataId=471c7e155621488e801de49132dc25da";
 
-	private Site site = Site.me().setRetryTimes(3).setSleepTime(300);
+	private Site site = Site.me().setRetryTimes(3).setTimeOut(20000).setSleepTime(300);
 	private static boolean isFirst = true;
 
 	@Override

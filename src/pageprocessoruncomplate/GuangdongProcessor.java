@@ -33,7 +33,7 @@ public class GuangdongProcessor implements PageProcessor {
 	public static String url = "http://www.gdzbtb.gov.cn/zhaobiao12/index.htm";
 	public static String test = "http://www.gdzbtb.gov.cn/zhaobiao12/201603/t20160325_351106.htm";
 
-	private Site site = Site.me().setRetryTimes(3).setSleepTime(10);
+	private Site site = Site.me().setRetryTimes(3).setTimeOut(20000).setSleepTime(10);
 
 	private static boolean isFirst = true;
 

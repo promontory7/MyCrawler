@@ -25,7 +25,7 @@ public class MeizhouProcessor implements PageProcessor {
 
 	public static String test = "http://www.mzggzy.com/show/index/1722/36129";
 
-	private Site site = Site.me().setRetryTimes(3).setSleepTime(300);
+	private Site site = Site.me().setRetryTimes(3).setTimeOut(40000).setSleepTime(300);
 	private static boolean isFirst = true;
 
 	@Override

@@ -23,7 +23,7 @@ public class ZhaoqingPrecessor implements PageProcessor {
 	public static String url = "http://ggzy.zhaoqing.gov.cn/ggzyjy/jzgcjy/jyggjs/index.html";
 	public static String test = "http://ggzy.zhaoqing.gov.cn/ggzyjy/jzgcjy/jyggjs/201606/t20160614_387866.html";
 
-	private Site site = Site.me().setRetryTimes(3).setTimeOut(10000).setSleepTime(300);
+	private Site site = Site.me().setRetryTimes(3).setTimeOut(20000).setSleepTime(300);
 	private static boolean isFirst = true;
 
 	@Override

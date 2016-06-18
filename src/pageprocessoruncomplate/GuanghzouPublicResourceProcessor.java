@@ -51,7 +51,7 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 	public static String url = "http://www.gzggzy.cn/cms/wz/view/index/layout2/szlist.jsp?siteId=1&channelId=503&pchannelid=466&curgclb=01,02&curxmlb=01,02,03,04,05&curIndex=1&pcurIndex=1&cIndex=1&page=1";
 	public static String test = "http://www.gzggzy.cn/cms/wz/view/index/layout3/index.jsp?siteId=1&channelId=628&infoId=458535";
 
-	private Site site = Site.me().setRetryTimes(3).setSleepTime(300);
+	private Site site = Site.me().setRetryTimes(3).setTimeOut(20000).setSleepTime(300);
 	private static boolean isFirst = true;
 
 	@Override

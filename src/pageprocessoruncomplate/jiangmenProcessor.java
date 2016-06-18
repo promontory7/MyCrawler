@@ -22,7 +22,7 @@ public class jiangmenProcessor implements PageProcessor {
 	public static String url = "http://zyjy.jiangmen.gov.cn//zbgg/index.htm";
 	public static String test = "http://zyjy.jiangmen.gov.cn//szqjszbgg/12935.htm";
 
-	private Site site = Site.me().setRetryTimes(3).setSleepTime(300);
+	private Site site = Site.me().setRetryTimes(3).setTimeOut(20000).setSleepTime(300);
 	private static boolean isFirst = true;
 
 	@Override

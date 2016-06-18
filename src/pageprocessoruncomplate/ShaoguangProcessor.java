@@ -28,7 +28,7 @@ public class ShaoguangProcessor implements PageProcessor {
 	public static String test = "http://www.sgjyzx.com/businessAnnounceAction!frontToBusinessAnnounceForm.do?businessAnnounce.id=ee374ed39aea4aa7a17cdfc9eba2585f";
 	public static String detailStart = "http://www.sgjyzx.com/businessAnnounceAction!frontToBusinessAnnounceForm.do?businessAnnounce.id=";
 
-	private Site site = Site.me().setRetryTimes(3).setSleepTime(300);
+	private Site site = Site.me().setRetryTimes(3).setTimeOut(20000).setSleepTime(300);
 	private static boolean isFirst = true;
 
 	@Override

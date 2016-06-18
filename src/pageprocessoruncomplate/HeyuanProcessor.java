@@ -25,7 +25,7 @@ public class HeyuanProcessor implements PageProcessor {
 
 	public static String test = "http://www.hyggzy.com/ggzy/jsgczbgg/20151123/219112.html";
 
-	private Site site = Site.me().setRetryTimes(3).setSleepTime(300);
+	private Site site = Site.me().setRetryTimes(3).setTimeOut(20000).setSleepTime(300);
 	private static boolean isFirst = true;
 
 	@Override

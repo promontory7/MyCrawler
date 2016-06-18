@@ -13,7 +13,7 @@ import utils.MyUtils;
 public class DongguanProcessor implements PageProcessor {
 	public static String url = "http://www.dgzb.com.cn/ggzy/website/WebPagesManagement/findListByPage?fcInfotype=1&tenderkind=All&projecttendersite=SS&fcInfotitle=&currentPage=1";
 
-	private Site site = Site.me().setRetryTimes(3).setSleepTime(300);
+	private Site site = Site.me().setRetryTimes(3).setTimeOut(20000).setSleepTime(300);
 	private static boolean isFirst = true;
 
 	@Override
@@ -26,7 +26,7 @@ public class DongguanProcessor implements PageProcessor {
 	public void process(Page page) {
 		// TODO Auto-generated method stub
 		if (isFirst) {
-			for (int i = 2; i < 30; i++) {
+			for (int i = 2; i < 50; i++) {
 				page.addTargetRequest(
 						"http://www.dgzb.com.cn/ggzy/website/WebPagesManagement/findListByPage?fcInfotype=1&tenderkind=All&projecttendersite=SS&fcInfotitle=&currentPage="
 								+ i);
@@ -43,11 +43,13 @@ public class DongguanProcessor implements PageProcessor {
 			Project project = new Project();
 			project.setTime(MyUtils.getcurentTime());
 			project.setState(0);
-			project.setWebsiteType("dongguan");
+			project.setWebsiteType("东莞市");
+			project.setProjectNo(every.getString("fcTendersn"));
 			project.setProjectName(every.getString("fcInfotitle"));
 			project.setPublicStart(every.getString("fcInfostartdate"));
 			project.setPublicEnd(every.getString("fcInfoenddate"));
 			project.setArticle(every.getString("fcInfocontent"));
+			project.setRawHtml(every.getString("fcInfocontent"));
 			project.setProjectType(every.getString("businesstypecaption"));
 
 			System.out.println(project);

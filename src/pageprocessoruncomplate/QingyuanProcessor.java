@@ -23,7 +23,7 @@ public class QingyuanProcessor implements PageProcessor {
 
 	public static String url = "http://www.qyggzy.cn/webIndex/newsLeftBoard/0102/010201?pageNO=1";
 	public static String test = "http://www.stjs.org.cn/zbtb/info_xinxi.asp?id=1882";
-	private Site site = Site.me().setRetryTimes(3).setSleepTime(100);
+	private Site site = Site.me().setRetryTimes(3).setTimeOut(20000).setSleepTime(100);
 	private static boolean isFirst = true;
 
 	@Override

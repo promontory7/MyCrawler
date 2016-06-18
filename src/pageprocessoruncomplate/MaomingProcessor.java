@@ -23,7 +23,7 @@ public class MaomingProcessor implements PageProcessor {
 	public static String url = "http://mmgpc.maoming.gov.cn/mmzbtb/jyxx/033001/033001001/033001001001/033001001001001/?Paging=1";
 	public static String test = "http://mmgpc.maoming.gov.cn/mmzbtb/infodetail/?infoid=aa7ee4b5-2777-4e1a-a559-2fd012be13a8&categoryNum=";
 
-	private Site site = Site.me().setRetryTimes(3).setTimeOut(10000).setSleepTime(300);
+	private Site site = Site.me().setRetryTimes(3).setTimeOut(20000).setSleepTime(300);
 	private static boolean isFirst = true;
 
 	@Override
