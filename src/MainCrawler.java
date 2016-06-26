@@ -2,6 +2,7 @@
 import pageprocessor.ShanTouProcessor;
 import pageprocessor.ZhongshanProcessor;
 import pageprocessor.ZhuHaiProcessor;
+import pageprocessoruncomplate.ChaozhouProcessor;
 import pageprocessoruncomplate.DongguanProcessor;
 import pageprocessoruncomplate.FoShangProcessor;
 import pageprocessoruncomplate.GuangDongTransportationProcessor;
@@ -9,10 +10,12 @@ import pageprocessoruncomplate.GuangdongProcessor;
 import pageprocessoruncomplate.GuanghzouPublicResourceProcessor;
 import pageprocessoruncomplate.HeyuanProcessor;
 import pageprocessoruncomplate.Huizhouprocessor;
+import pageprocessoruncomplate.JieyangProcessor;
 import pageprocessoruncomplate.MaomingProcessor;
 import pageprocessoruncomplate.MeizhouProcessor;
 import pageprocessoruncomplate.QingyuanProcessor;
 import pageprocessoruncomplate.ShaoguangProcessor;
+import pageprocessoruncomplate.ShundeProcessor;
 import pageprocessoruncomplate.YangjiangProcessor;
 import pageprocessoruncomplate.ZhaoqingPrecessor;
 import pageprocessoruncomplate.jiangmenProcessor;
@@ -26,8 +29,8 @@ public class MainCrawler {
 //		Spider.create(new ZhongshanProcessor()).addUrl(ZhongshanProcessor.url).thread(5).run();
 //
 //		Spider.create(new ZhuHaiProcessor()).addUrl(ZhuHaiProcessor.url).thread(5).run();
-		
-		Spider.create(new ShanTouProcessor()).addUrl(ShanTouProcessor.url).thread(5).run();
+//		
+//		Spider.create(new ShanTouProcessor()).addUrl(ShanTouProcessor.url).thread(5).run();
 //
 //		Spider.create(new GuangdongProcessor()).addUrl(GuangdongProcessor.url).thread(5).run();
 //
@@ -58,6 +61,15 @@ public class MainCrawler {
 //		Spider.create(new FoShangProcessor()).addUrl(FoShangProcessor.url).thread(5).run();
 //
 //		Spider.create(new DongguanProcessor()).addUrl(DongguanProcessor.url).thread(5).run();
+//
+//		Spider.create(new ChaozhouProcessor()).addUrl(ChaozhouProcessor.url).thread(5).run();
+//
+//		
+//		Spider.create(new JieyangProcessor()).addUrl(JieyangProcessor.url).thread(5).run();
+//
+		
+		Spider.create(new ShundeProcessor()).addUrl(ShundeProcessor.url).thread(5).run();
+
 	}
 
 }
