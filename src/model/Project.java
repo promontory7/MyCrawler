@@ -10,7 +10,7 @@ public class Project {
 	public String projectNo; // 编号
 	public String projectBrief; // 项目简介
 	public String projectAddress; // 地址
-	public String projectType; // 企业类型
+	public String projectType; // 项目类型
 	public String projectStage; // 项目阶段
 	public String projectPrice; // 造价
 	public String tenDerWay; // 招标方式
