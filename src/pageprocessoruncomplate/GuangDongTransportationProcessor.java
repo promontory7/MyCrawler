@@ -57,7 +57,9 @@ public class GuangDongTransportationProcessor implements PageProcessor {
 			List<String> urls = page.getHtml().links().regex(URL_DETAILS).all();
 			System.out.println(urls.size());
 			if (urls != null && urls.size() > 0) {
-				page.addTargetRequests(urls);
+				for (int i = 0; i < urls.size(); i++) {
+					MyUtils.addRequestToPage(page, urls.get(i));
+				}
 			}
 		}
 
@@ -66,7 +68,7 @@ public class GuangDongTransportationProcessor implements PageProcessor {
 			String project_name = null;
 			String project_publicStart = null;
 			StringBuffer project_article = new StringBuffer();
-			StringBuffer project_attach=new StringBuffer();
+			StringBuffer project_attach = new StringBuffer();
 
 			Elements elements = doc.getElementsByAttributeValue("class", "detail_title");
 			Elements h1s = elements.select("h1");
@@ -78,7 +80,7 @@ public class GuangDongTransportationProcessor implements PageProcessor {
 				project_publicStart = spans.get(1).text();
 			}
 
-			String rawHtml=doc.getElementsByAttributeValue("class", "detail_content").text();
+			String rawHtml = doc.getElementsByAttributeValue("class", "detail_content").text();
 			// 通过这个方法找到 mian 标签，无法直接获得
 			Element main = doc.getElementsByAttributeValue("class", "detail_content").select("maincontent").get(0)
 					.children().get(3);
@@ -176,13 +178,13 @@ public class GuangDongTransportationProcessor implements PageProcessor {
 					project_article.append(element.text()).append("\n");
 				}
 			}
-			
-			Elements lis=doc.getElementsByAttributeValue("class", "otherPages");
-			if (lis!=null&&lis.size()>0) {
-			    for(Element li:lis){
-			    	project_attach.append(li.text()).append("  ###   ").append(li.select("a").attr("href").trim());
-			    }
-				
+
+			Elements lis = doc.getElementsByAttributeValue("class", "otherPages");
+			if (lis != null && lis.size() > 0) {
+				for (Element li : lis) {
+					project_attach.append(li.text()).append("  ###   ").append(li.select("a").attr("href").trim());
+				}
+
 			}
 
 			project.setUrl(page.getUrl().toString());
@@ -193,7 +195,7 @@ public class GuangDongTransportationProcessor implements PageProcessor {
 			project.setPublicStart(project_publicStart);
 			project.setArticle(project_article.toString());
 			project.setRawHtml(rawHtml);
-//			project.setAttach(project_attach.toString());
+			// project.setAttach(project_attach.toString());
 			System.out.println(project);
 
 			HibernateUtil.save2Hibernate(project);

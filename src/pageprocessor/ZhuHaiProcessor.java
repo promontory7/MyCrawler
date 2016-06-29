@@ -54,7 +54,9 @@ public class ZhuHaiProcessor implements PageProcessor {
 			List<String> urls = page.getHtml().xpath("//ul[@class=\"news\"]").links().regex(URL_DETAILS).all();
 			System.out.println("从列表页获取" + urls.size());
 			if (urls != null && urls.size() > 0) {
-				page.addTargetRequests(urls);
+				for(int i=0;i<urls.size();i++){
+					MyUtils.addRequestToPage(page, urls.get(i));
+				}
 			}
 
 		} else {

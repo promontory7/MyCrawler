@@ -34,7 +34,11 @@ public class ChaozhouProcessor implements PageProcessor {
 		if (page.getUrl().toString().trim().equals(url)) {
 			List<String> urls = page.getHtml().xpath("//tr[@class=\"trstyle\"]").links().regex(URL_DETAILS).all();
 			System.out.println("从列表页获取的详情数目" + urls.size());
-			page.addTargetRequests(urls);
+			if (urls != null && urls.size() > 0) {
+				for (int i = 0; i < urls.size(); i++) {
+					MyUtils.addRequestToPage(page, urls.get(i));
+				}
+			}
 		}
 		if (page.getUrl().regex(URL_DETAILS).match()) {
 			Document doc = Jsoup.parse(page.getHtml().toString());

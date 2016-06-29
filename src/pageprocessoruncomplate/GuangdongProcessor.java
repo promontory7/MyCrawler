@@ -45,7 +45,7 @@ public class GuangdongProcessor implements PageProcessor {
 		if (isFirst) {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
-			//500
+			// 500
 			for (int i = 1; i < 480; i++) {
 				urls.add("http://www.gdzbtb.gov.cn/zhaobiao12/index_" + i + ".htm");
 			}
@@ -59,7 +59,9 @@ public class GuangdongProcessor implements PageProcessor {
 			List<String> urls = page.getHtml().xpath("//ul[@class=\"position2\"]").links().regex(URL_DETAILS).all();
 			System.out.println(urls.size());
 			if (urls != null && urls.size() > 0) {
-				page.addTargetRequests(urls);
+				for (int i = 0; i < urls.size(); i++) {
+					MyUtils.addRequestToPage(page, urls.get(i));
+				}
 			}
 
 		} else {

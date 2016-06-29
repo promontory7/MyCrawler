@@ -3,9 +3,12 @@ package utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import us.codecraft.webmagic.Page;
 
 public class MyUtils {
 	public static String getcurentTime() {
@@ -41,4 +44,17 @@ public class MyUtils {
 		}
 
 	}
+
+	public static void addRequestToPage(Page page, String url) {
+		List<String> completedURL = CacheHashMap.completedURL;
+		if (completedURL != null && completedURL.size() > 0) {
+			if (!completedURL.contains(url.trim())) {
+				page.addTargetRequest(url.trim());
+			}
+		} else {
+			page.addTargetRequest(url.trim());
+		}
+
+	}
+
 }

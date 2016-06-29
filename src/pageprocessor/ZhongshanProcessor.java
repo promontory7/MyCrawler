@@ -54,7 +54,9 @@ public class ZhongshanProcessor implements PageProcessor {
 		if (page.getUrl().regex(URL_LIST).match()) {
 			List<String> urls = page.getHtml().xpath("//td[@class=\"toptd_bai\"]").links().regex(URL_DETAILS_RAW).all();
 			System.out.println("从列表页获取的详情数目" + urls.size());
-			page.addTargetRequests(urls);
+			for(int i=0;i<urls.size();i++){
+				MyUtils.addRequestToPage(page, urls.get(i));
+			}
 		}
 
 		if (page.getUrl().regex(URL_DETAILS).match() || page.getUrl().regex(URL_DETAILS_RAW).match()) {

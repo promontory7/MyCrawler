@@ -52,9 +52,9 @@ public class MeizhouProcessor implements PageProcessor {
 			Elements lis = doc.getElementsByAttributeValue("class", "list").select("ul").select("li");
 			for (Element li : lis) {
 				String url = li.select("a").attr("href").trim();
-				page.addTargetRequest(url);
+				MyUtils.addRequestToPage(page, url);
 				CacheHashMap.cache.put(url, li.select("a").text().trim() + "###" + li.select("span").text().trim());
-//				System.out.println(CacheHashMap.cache.get(url));
+				// System.out.println(CacheHashMap.cache.get(url));
 			}
 		}
 		if (page.getUrl().regex(URL_DETAILS).match()) {
@@ -67,15 +67,15 @@ public class MeizhouProcessor implements PageProcessor {
 			String projectPublicStart = null;
 
 			Elements elements = doc.getElementsByAttributeValue("class", "MsoNormal");
-			for(Element element:elements){
+			for (Element element : elements) {
 				projectArticle.append(element.text().trim()).append("\n");
 			}
 
 			String value = CacheHashMap.cache.get(page.getUrl().toString());
 			projectName = value.split("###")[0];
 			projectPublicStart = value.split("###")[1];
-			
-			String rawhtml =doc.getElementsByAttributeValue("class", "zhengwen").toString();
+
+			String rawhtml = doc.getElementsByAttributeValue("class", "zhengwen").toString();
 
 			project.setTime(MyUtils.getcurentTime());
 			project.setWebsiteType("梅州市");

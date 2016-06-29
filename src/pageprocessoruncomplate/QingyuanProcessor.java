@@ -64,7 +64,7 @@ public class QingyuanProcessor implements PageProcessor {
 					String data = tds.get(1).text();
 
 					CacheHashMap.cache.put(url, title + "###" + data);
-					page.addTargetRequest(url);
+					MyUtils.addRequestToPage(page, url);
 					System.out.println(url + "  " + CacheHashMap.cache.get(url));
 				}
 
@@ -88,7 +88,7 @@ public class QingyuanProcessor implements PageProcessor {
 			}
 
 			Element div = doc.getElementById("context_div");
-			String rawhtml =div.toString();
+			String rawhtml = div.toString();
 			project.setRawHtml(div.toString());
 			for (Element p : div.children()) {
 				if (p.nodeName().equals("table")) {

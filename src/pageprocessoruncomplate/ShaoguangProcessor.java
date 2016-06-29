@@ -56,7 +56,7 @@ public class ShaoguangProcessor implements PageProcessor {
 				if (tds.size() == 3) {
 					String id = tds.get(1).select("a").toString().substring(11, 43);
 					CacheHashMap.cache.put(detailStart + id, tds.get(1).text() + "###" + tds.get(2).text());
-					page.addTargetRequest(detailStart + id);
+					MyUtils.addRequestToPage(page, detailStart + id);
 					System.out.println(CacheHashMap.cache.get(detailStart + id));
 				}
 			}

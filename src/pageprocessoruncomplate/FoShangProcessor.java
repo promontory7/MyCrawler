@@ -35,14 +35,14 @@ public class FoShangProcessor implements PageProcessor {
 	private static boolean isFirst = true;
 
 	@Override
-	public void process(Page page){
+	public void process(Page page) {
 		// TODO Auto-generated method stub
 		Document doc = Jsoup.parse(page.getHtml().toString());
 
 		if (isFirst) {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
-			//50
+			// 50
 			for (int i = 1; i < 40; i++) {
 				urls.add("http://www.fsggzy.cn/gcjy/gc_zbxx/gc_zbsz/index_" + i + ".html");
 				urls.add("http://www.fsggzy.cn/gcjy/gc_zbxx/jygg_gq/index_" + i + ".html");
@@ -59,22 +59,23 @@ public class FoShangProcessor implements PageProcessor {
 			List<String> urls = page.getHtml().xpath("//a[@id=\"title_link\"]").links().regex(URL_DETAILS).all();
 			System.out.println(urls.size());
 			if (urls != null && urls.size() > 0) {
-				page.addTargetRequests(urls);
+				for (int i = 0; i < urls.size(); i++) {
+					MyUtils.addRequestToPage(page, urls.get(i));
+				}
 			}
 		}
 		if (page.getUrl().regex(URL_DETAILS).match()) {
 			Project project = new Project();
-			
-			String projectRAWHtml =doc.getElementsByAttributeValue("class", "contentrightlistbox2").toString();
+
+			String projectRAWHtml = doc.getElementsByAttributeValue("class", "contentrightlistbox2").toString();
 			String projectName = doc.getElementsByAttributeValue("class", "contenttitle2").select("h3").text();
-			String projectPublicStart =doc.getElementsByAttributeValue("class", "fbtime").text();
+			String projectPublicStart = doc.getElementsByAttributeValue("class", "fbtime").text();
 			Elements mElements = doc.getElementsByAttributeValue("class", "content2").select("p");
 			StringBuffer article = new StringBuffer();
 			for (Element p : mElements) {
 				article.append(p.text()).append("\n");
 			}
-			
-			
+
 			project.setWebsiteType("佛山市");
 			project.setState(0);
 			project.setUrl(page.getUrl().toString());

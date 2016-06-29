@@ -49,7 +49,9 @@ public class JieyangProcessor implements PageProcessor {
 			List<String> urls = page.getHtml().xpath("//div[@class=\"box\"]").links().regex(URL_DETAILS).all();
 			System.out.println("从列表页获取的详情数目" + urls.size());
 			if (urls != null && urls.size() > 0) {
-				page.addTargetRequests(urls);
+				for (int i = 0; i < urls.size(); i++) {
+					MyUtils.addRequestToPage(page, urls.get(i));
+				}
 			}
 
 		}

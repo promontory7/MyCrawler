@@ -90,6 +90,7 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 					"http://www.gzggzy.cn/cms/wz/view/index/layout2/szlist.jsp?siteId=1&channelId=535&channelids=15&pchannelid=474&curgclb=13&curxmlb=01,02,03,04,05&curIndex=1&pcurIndex=9&page=0");
 
 			System.out.println("全部种类数量" + urls.size());
+			
 			page.addTargetRequests(urls);
 			isFirst = false;
 		}
@@ -135,7 +136,9 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 			System.out.println("这个页面数据数量" + urls.size());
 
 			if (urls != null && urls.size() > 0) {
-				page.addTargetRequests(urls);
+				for (int i = 0; i < urls.size(); i++) {
+					MyUtils.addRequestToPage(page, urls.get(i));
+				}
 
 			}
 		}

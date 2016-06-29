@@ -56,19 +56,20 @@ public class Huizhouprocessor implements PageProcessor {
 
 			Elements uls = doc.getElementById("div_list").getElementsByAttributeValue("class", "ul_art_row");
 			for (Element ul : uls) {
-				String url = ul.getElementsByAttributeValue("class", "li_art_title").get(0).select("a").attr("href").trim();
+				String url = ul.getElementsByAttributeValue("class", "li_art_title").get(0).select("a").attr("href")
+						.trim();
 				String title = ul.getElementsByAttributeValue("class", "li_art_title").get(0).text();
 				String data = ul.getElementsByAttributeValue("class", "li_art_date").get(0).text();
 				CacheHashMap.cache.put(url, title + "###" + data);
 				System.out.println(url + "   " + CacheHashMap.cache.get(url));
-				page.addTargetRequest(url);
+				MyUtils.addRequestToPage(page, url);
 			}
 		}
 
 		if (page.getUrl().regex(URL_DETAILS).match()) {
 			Project project = new Project();
 			StringBuffer project_article = new StringBuffer();
-			System.out.println("======="+page.getUrl()+"===========");
+			System.out.println("=======" + page.getUrl() + "===========");
 			String[] value = CacheHashMap.cache.get(page.getUrl().toString().trim()).split("###");
 			if (value != null && value.length > 1) {
 				project.setProjectName(value[0]);
@@ -79,8 +80,8 @@ public class Huizhouprocessor implements PageProcessor {
 			for (Element p : divzoom.children()) {
 				project_article.append(p.text()).append("\n");
 			}
-			
-			String  rawhtml =doc.getElementById("div_view").toString();
+
+			String rawhtml = doc.getElementById("div_view").toString();
 			project.setUrl(page.getUrl().toString().trim());
 			project.setState(0);
 			project.setWebsiteType("惠州市");

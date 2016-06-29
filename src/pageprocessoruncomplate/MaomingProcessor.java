@@ -68,7 +68,7 @@ public class MaomingProcessor implements PageProcessor {
 							String data = tds.get(2).text();
 
 							CacheHashMap.cache.put(url, title + "###" + data);
-							page.addTargetRequest(url);
+							MyUtils.addRequestToPage(page, url);
 							System.out.println(url + "  " + CacheHashMap.cache.get(url));
 						}
 					}

@@ -60,7 +60,7 @@ public class ShundeProcessor implements PageProcessor {
 					String no = td.get(1).text();
 					CacheHashMap.cache.put(url, title + "###" + data + "###" + no);
 					System.out.println(url + "   " + CacheHashMap.cache.get(url));
-					page.addTargetRequest(url);
+					MyUtils.addRequestToPage(page, url);
 				} else {
 					System.out.println("小于3？？？？？");
 				}

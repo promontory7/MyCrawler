@@ -36,7 +36,7 @@ public class HeyuanProcessor implements PageProcessor {
 		if (isFirst) {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
-			//22
+			// 22
 			for (int i = 2; i < 20; i++) {
 				urls.add(urlFirst + i + ".html");
 			}
@@ -51,17 +51,11 @@ public class HeyuanProcessor implements PageProcessor {
 			System.out.println("lis.size()" + lis.size());
 			for (Element li : lis) {
 				String url = li.select("a").attr("href").trim();
-				page.addTargetRequest(url);
+				MyUtils.addRequestToPage(page, url);
 				CacheHashMap.cache.put(url, li.select("a").text() + "###" + li.select("span").text());
-//				System.out.println("cache" + CacheHashMap.cache.get(url));
+				// System.out.println("cache" + CacheHashMap.cache.get(url));
 			}
 
-			// List<String> urls = page.getHtml().xpath("//a[@class=\"b-left
-			// title\"]").links().regex(URL_DETAILS).all();
-			// System.out.println(urls.size());
-			// if (urls != null && urls.size() > 0) {
-			// page.addTargetRequests(urls);
-			// }
 		}
 		if (page.getUrl().regex(URL_DETAILS).match()) {
 
@@ -102,7 +96,7 @@ public class HeyuanProcessor implements PageProcessor {
 			String cacheString = CacheHashMap.cache.get(page.getUrl().toString().trim());
 			String projectName = cacheString.split("###")[0];
 			String publicStart = cacheString.split("###")[1];
-			String rawhtml =mElements.toString();
+			String rawhtml = mElements.toString();
 
 			project.setWebsiteType("河源市");
 			project.setState(0);
