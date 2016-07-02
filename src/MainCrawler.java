@@ -1,8 +1,6 @@
 public class MainCrawler {
 
 	public static void main(String[] args) {
-
-		CrawlerTask.startCrawlerTask();
+		CrawlerTimerTask.StartCrawlerTask(21, 24, 00);
 	}
-
 }
