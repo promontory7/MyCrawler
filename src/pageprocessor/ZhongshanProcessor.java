@@ -45,7 +45,7 @@ public class ZhongshanProcessor implements PageProcessor {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
 			//80
-			for (int i = 1; i < 40; i++) {
+			for (int i = 1; i < 50; i++) {
 				urls.add("http://www.zsjyzx.gov.cn/zsweb/newweb/showList/000000000002/000000000201?pageNO=" + i);
 			}
 			page.addTargetRequests(urls);
@@ -95,7 +95,7 @@ public class ZhongshanProcessor implements PageProcessor {
 			boolean isSecondNameAndPhone = false;
 			Element form = doc.getElementById("projectForm");
 			String rawhtml = form.toString();
-			String projectNo = doc.getElementById("projectForm").select("div").text();
+			String projectNo = doc.getElementById("projectForm").select("div").get(0).text();
 
 			for (Element tr : trnum) {
 				Elements ths = tr.select("th");

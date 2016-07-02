@@ -41,7 +41,7 @@ public class ZhuHaiProcessor implements PageProcessor {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
 			// 800
-			for (int i = 2; i < 100; i++) {
+			for (int i = 2; i < 500; i++) {
 				urls.add("http://ggzy.zhuhai.gov.cn//zbgg/index_" + i + ".htm");
 			}
 			page.addTargetRequests(urls);

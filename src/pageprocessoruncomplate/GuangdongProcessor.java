@@ -46,7 +46,7 @@ public class GuangdongProcessor implements PageProcessor {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
 			// 500
-			for (int i = 1; i < 480; i++) {
+			for (int i = 1; i < 300; i++) {
 				urls.add("http://www.gdzbtb.gov.cn/zhaobiao12/index_" + i + ".htm");
 			}
 			page.addTargetRequests(urls);

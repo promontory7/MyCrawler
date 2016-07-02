@@ -42,7 +42,7 @@ public class YangjiangProcessor implements PageProcessor {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
 			// 80
-			for (int i = 2; i < 30; i++) {
+			for (int i = 2; i < 50; i++) {
 				urls.add("http://www.yjggzy.cn/Query/JsgcBidAfficheQuery2/d4f193435ad04447a997719474139181?page=" + i);
 			}
 			page.addTargetRequests(urls);

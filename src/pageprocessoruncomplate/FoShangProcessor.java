@@ -43,7 +43,7 @@ public class FoShangProcessor implements PageProcessor {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
 			// 50
-			for (int i = 1; i < 40; i++) {
+			for (int i = 1; i < 30; i++) {
 				urls.add("http://www.fsggzy.cn/gcjy/gc_zbxx/gc_zbsz/index_" + i + ".html");
 				urls.add("http://www.fsggzy.cn/gcjy/gc_zbxx/jygg_gq/index_" + i + ".html");
 			}

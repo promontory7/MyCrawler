@@ -26,7 +26,7 @@ public class DongguanProcessor implements PageProcessor {
 	public void process(Page page) {
 		// TODO Auto-generated method stub
 		if (isFirst) {
-			for (int i = 2; i < 50; i++) {
+			for (int i = 2; i < 30; i++) {
 				String url = "http://www.dgzb.com.cn/ggzy/website/WebPagesManagement/findListByPage?fcInfotype=1&tenderkind=All&projecttendersite=SS&fcInfotitle=&currentPage="
 						+ i;
 				MyUtils.addRequestToPage(page, url);

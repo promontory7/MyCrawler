@@ -41,7 +41,7 @@ public class MaomingProcessor implements PageProcessor {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
 			// 18
-			for (int i = 2; i < 15; i++) {
+			for (int i = 2; i < 16; i++) {
 				urls.add(
 						"http://mmgpc.maoming.gov.cn/mmzbtb/jyxx/033001/033001001/033001001001/033001001001001/?Paging="
 								+ i);
