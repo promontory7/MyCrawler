@@ -172,7 +172,7 @@ public class ZhuHaiProcessor implements PageProcessor {
 			project.setBond(projectBond);
 			project.setRawHtml(rawhtml);
 			project.setUrl(page.getUrl().toString());
-			project.setWebsiteType("海珠市");
+			project.setWebsiteType("珠海市");
 			project.setTime(MyUtils.getcurentTime());
 			project.setState(0);
 			

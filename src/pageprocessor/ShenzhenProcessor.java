@@ -52,7 +52,6 @@ public class ShenzhenProcessor implements PageProcessor {
 			Element div_zbxx = doc.getElementById("bdxx");
 
 			Elements tables = doc.select("table");
-			System.out.println("-----------------------" + tables.size());
 			for (Element table : tables) {
 				for (Element tr : table.select("tr")) {
 					Elements tds = tr.select("td");

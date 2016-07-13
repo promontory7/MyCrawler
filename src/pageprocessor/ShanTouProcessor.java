@@ -25,7 +25,7 @@ public class ShanTouProcessor implements PageProcessor {
 
 	public static String url = "http://www.stjs.org.cn/zbtb/zhaobiao_gonggao.asp?page=1";
 	public static String test = "http://www.stjs.org.cn/zbtb/info_xinxi.asp?id=1882";
-	private Site site = Site.me().setRetryTimes(3).setTimeOut(20000).setSleepTime(300);
+	private Site site = Site.me().setRetryTimes(3).setCharset("gbk").setTimeOut(20000).setSleepTime(1000);
 	private static boolean isFirst = true;
 
 	@Override
@@ -47,7 +47,7 @@ public class ShanTouProcessor implements PageProcessor {
 			List<String> urls = page.getHtml().xpath("//td[@class=\"newsline7\"]").links().regex(URL_DETAILS).all();
 			System.out.println("从列表页获取的详情数目" + urls.size());
 			if (urls != null && urls.size() > 0) {
-				for(int i=0;i<urls.size();i++){
+				for (int i = 0; i < urls.size(); i++) {
 					MyUtils.addRequestToPage(page, urls.get(i));
 				}
 			}
@@ -68,7 +68,8 @@ public class ShanTouProcessor implements PageProcessor {
 			for (Element tbody : divElement) {
 				int num = tbody.select("tr").size();
 				if (num >= 1) {
-					if (tbody.select("tr").get(0).select("td").get(0).text().equals("公告编号")) {
+					if (tbody.select("tr").get(0).select("td").get(0).text().equals("公告编号")||
+							tbody.select("tr").get(0).select("td").get(0).text().equals("工程编号")) {
 						Elements trr = tbody.select("tr");
 
 						for (Element tr : trr) {
