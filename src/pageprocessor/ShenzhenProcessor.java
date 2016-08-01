@@ -133,7 +133,7 @@ public class ShenzhenProcessor implements PageProcessor {
 			project.setUrl(page.getUrl().toString());
 			project.setWebsiteType("深圳市");
 			project.setTime(MyUtils.getcurentTime());
-			project.setState(1);
+			project.setState(0);
 
 			System.out.println(project.toString());
 			HibernateUtil.save2Hibernate(project);

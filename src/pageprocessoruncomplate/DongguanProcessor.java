@@ -50,7 +50,7 @@ public class DongguanProcessor implements PageProcessor {
 			project.setPublicStart(every.getString("fcInfostartdate"));
 			project.setPublicEnd(every.getString("fcInfoenddate"));
 			project.setArticle(every.getString("fcInfocontent"));
-			project.setRawHtml(every.getString("fcInfocontent"));
+			project.setRawHtml(every.getString("fcInfocontent").replace("\r\n", "<br>"));
 			project.setProjectType(every.getString("businesstypecaption"));
 
 			System.out.println(project);

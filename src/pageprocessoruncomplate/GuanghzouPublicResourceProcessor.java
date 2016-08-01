@@ -90,45 +90,46 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 					"http://www.gzggzy.cn/cms/wz/view/index/layout2/szlist.jsp?siteId=1&channelId=535&channelids=15&pchannelid=474&curgclb=13&curxmlb=01,02,03,04,05&curIndex=1&pcurIndex=9&page=0");
 
 			System.out.println("全部种类数量" + urls.size());
-			
+
 			page.addTargetRequests(urls);
 			isFirst = false;
 		}
 		Document doc = Jsoup.parse(page.getHtml().toString());
 
 		if (page.getUrl().regex(URL_LIST).match()) {
-			
-			String projectType=null;
+
+			String projectType = null;
 			if (page.getUrl().regex(URL_LIST1).match()) {
-				projectType="房建市政";
-			}else if (page.getUrl().regex(URL_LIST2).match()) {
-				projectType="电力";
-			}else if (page.getUrl().regex(URL_LIST3).match()) {
-				projectType="交通";
-			}else if (page.getUrl().regex(URL_LIST4).match()) {
-				projectType="铁路";
-			}else if (page.getUrl().regex(URL_LIST5).match()) {
-				projectType="水利";
-			}else if (page.getUrl().regex(URL_LIST6).match()) {
-				projectType="民航";
-			}else if (page.getUrl().regex(URL_LIST7).match()) {
-				projectType="园林";
-			}else if (page.getUrl().regex(URL_LIST8).match()) {
-				projectType="小额";
-			}else  {
-				projectType="其他";
+				projectType = "房建市政";
+			} else if (page.getUrl().regex(URL_LIST2).match()) {
+				projectType = "电力";
+			} else if (page.getUrl().regex(URL_LIST3).match()) {
+				projectType = "交通";
+			} else if (page.getUrl().regex(URL_LIST4).match()) {
+				projectType = "铁路";
+			} else if (page.getUrl().regex(URL_LIST5).match()) {
+				projectType = "水利";
+			} else if (page.getUrl().regex(URL_LIST6).match()) {
+				projectType = "民航";
+			} else if (page.getUrl().regex(URL_LIST7).match()) {
+				projectType = "园林";
+			} else if (page.getUrl().regex(URL_LIST8).match()) {
+				projectType = "小额";
+			} else {
+				projectType = "其他";
 			}
-			
+
 			System.out.println("获取列表数据");
 
 			Elements trElements = doc.getElementsByAttributeValue("class", "wsbs-table").select("tbody").select("tr");
-			System.out.println("trElements"+trElements.text().toString());
+			System.out.println("trElements" + trElements.text().toString());
 			for (Element tr : trElements) {
 				Elements td = tr.select("td");
-				if (td.size()==3) {
-					CacheHashMap.cache.put(td.get(1).select("a").attr("href"), td.get(1).text() + "###" + td.get(2).text()+ "###" + projectType);
+				if (td.size() == 3) {
+					CacheHashMap.cache.put(td.get(1).select("a").attr("href"),
+							td.get(1).text() + "###" + td.get(2).text() + "###" + projectType);
 				}
-				
+
 			}
 			System.out.println("CacheHashMap.cache.size()" + CacheHashMap.cache.size());
 
@@ -146,23 +147,28 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 		if (page.getUrl().regex(URL_DETAILS).match()) {
 			Project project = new Project();
 
-			String projectType=null;
+			String projectType = null;
 			String projectName = null;
 			String projectPublicStart = null;
 			StringBuffer article = new StringBuffer();
 			StringBuffer attach = new StringBuffer();
-			String rawhtml=null;
+			String rawhtml = null;
 
-			
 			String value = CacheHashMap.cache.get(page.getUrl().toString());
 			projectName = value.split("###")[0];
 			projectPublicStart = value.split("###")[1];
-			projectType=value.split("###")[2];
+			projectType = value.split("###")[2];
 
 			Elements elements = doc.getElementsByAttributeValue("class", "Section1").select("p");
-			
+
 			for (int i = 0; i < elements.size(); i++) {
 				article.append(elements.get(i).text()).append("\n");
+			}
+			if (doc.getElementsByAttributeValue("class", "Section2").size() > 0) {
+				Elements elements2 = doc.getElementsByAttributeValue("class", "Section2").select("p");
+				for (int i = 0; i < elements2.size(); i++) {
+					article.append(elements2.get(i).text()).append("\n");
+				}
 			}
 
 			Elements attachElements = doc.getElementsByAttributeValue("class", "xx-main").select("font");
@@ -171,8 +177,10 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 						.append(attachElements.get(i).select("a").attr("href")).append("\n");
 			}
 
-			rawhtml=doc.getElementsByAttributeValue("class", "Section1").toString();
-			
+			rawhtml = doc.getElementsByAttributeValue("class", "Section1").toString() + "<br>";
+			if (doc.getElementsByAttributeValue("class", "Section2").size() > 0) {
+				rawhtml += doc.getElementsByAttributeValue("class", "Section2").toString();
+			}
 			project.setTime(MyUtils.getcurentTime());
 			project.setWebsiteType("广州市");
 			project.setState(0);
@@ -189,7 +197,6 @@ public class GuanghzouPublicResourceProcessor implements PageProcessor {
 		}
 	}
 
-	
 	@Override
 	public Site getSite() {
 		// TODO Auto-generated method stub
