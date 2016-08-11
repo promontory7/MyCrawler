@@ -45,7 +45,7 @@ public class ZhongshanProcessor implements PageProcessor {
 			System.out.println("添加所有列表链接");
 			ArrayList<String> urls = new ArrayList<String>();
 			//80
-			for (int i = 1; i < 50; i++) {
+			for (int i = 1; i < 5; i++) {
 				urls.add("http://www.zsjyzx.gov.cn/zsweb/newweb/showList/000000000002/000000000201?pageNO=" + i);
 			}
 			page.addTargetRequests(urls);
@@ -66,7 +66,7 @@ public class ZhongshanProcessor implements PageProcessor {
 					.replace(":80/zsweb/..", "");
 			System.out.println("添加详情信息表格" + tagreturl);
 			// page.addTargetRequest();
-			page.addTargetRequest(tagreturl);
+			MyUtils.addRequestToPage(page, tagreturl);
 
 		}
 		if (page.getUrl().regex(URL_TABLE).match()) {
