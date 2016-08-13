@@ -1,5 +1,7 @@
 package pageprocessoruncomplate;
 
+import org.hibernate.mapping.PrimaryKey;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -40,21 +42,27 @@ public class DongguanProcessor implements PageProcessor {
 		// System.out.println(page.getJson());
 
 		for (int i = 0; i < datas.size(); i++) {
+			
 			JSONObject every = datas.getJSONObject(i);
-			Project project = new Project();
-			project.setTime(MyUtils.getcurentTime());
-			project.setState(0);
-			project.setWebsiteType("东莞市");
-			project.setProjectNo(every.getString("fcTendersn"));
-			project.setProjectName(every.getString("fcInfotitle"));
-			project.setPublicStart(every.getString("fcInfostartdate"));
-			project.setPublicEnd(every.getString("fcInfoenddate"));
-			project.setArticle(every.getString("fcInfocontent"));
-			project.setRawHtml(every.getString("fcInfocontent").replace("\r\n", "<br>"));
-			project.setProjectType(every.getString("businesstypecaption"));
+			if (!MyUtils.isInCompletedURL(every.getString("id"))) {
+				
+				Project project = new Project();
+				project.setTime(MyUtils.getcurentTime());
+				project.setState(0);
+				project.setUrl(every.getString("id"));
+				project.setWebsiteType("东莞市");
+				project.setProjectNo(every.getString("fcTendersn"));
+				project.setProjectName(every.getString("fcInfotitle"));
+				project.setPublicStart(every.getString("fcInfostartdate"));
+				project.setPublicEnd(every.getString("fcInfoenddate"));
+				project.setArticle(every.getString("fcInfocontent"));
+				project.setRawHtml(every.getString("fcInfocontent").replace("\r\n", "<br>"));
+				project.setProjectType(every.getString("businesstypecaption"));
 
-			System.out.println(project);
-			HibernateUtil.save2Hibernate(project);
+				System.out.println(project);
+				HibernateUtil.save2Hibernate(project);
+			}
+		
 		}
 	}
 

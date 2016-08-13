@@ -1,3 +1,5 @@
+import javax.xml.crypto.Data;
+
 public class MainCrawler {
 
 	public static void main(String[] args) {
@@ -8,10 +10,18 @@ public class MainCrawler {
 			int second = Integer.parseInt(args[2]);
 			System.out.println("爬虫在每天   " + hour + ":" + minutes + ":" + second + "  启动");
 			CrawlerTimerTask.StartCrawlerTask(hour, minutes, second);
+			System.out.println("本次爬去完毕  " );
+		}if (args != null && args.length == 1) {
+			int hour = Integer.parseInt(args[0]);
+			
+			System.out.println("爬虫在每   " + hour + "  小时爬一次");
+			CrawlerTimerTask.StartCrawlerTask(hour);
+			System.out.println("本次爬去完毕，将会在  " + hour + "  小时后再启动    "+new Data() {
+			});
 		} else {
-			CrawlerTimerTask.StartCrawlerTask(02, 00, 00);
-			System.out.println("爬虫在每天   " + 02 + ":" + 00 + ":" + 00 + "  启动");
-//			CrawlerTask.startCrawlerTask();
+			System.out.println("爬虫在每  2 小时爬一次");
+			CrawlerTimerTask.StartCrawlerTask(2);
+			System.out.println("本次爬去完毕，将会在 2  小时后再启动    +new Data()");
 
 		}
 	}

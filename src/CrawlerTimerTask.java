@@ -19,4 +19,20 @@ public class CrawlerTimerTask {
 			}
 		}, date.getTime(), daySpan);
 	};
+	
+	public static void StartCrawlerTask(int hour) {
+	
+		// 2小时的毫秒数
+		long daySpan = 2 * 60 * 60 * 1000;
+		// 得到定时器实例
+		Timer t = new Timer();
+		// 使用匿名内方式进行方法覆盖
+		t.schedule(new TimerTask() {
+			public void run() {
+				CrawlerTask.startCrawlerTask();
+			}
+		},0, daySpan);
+		
+		
+	};
 }

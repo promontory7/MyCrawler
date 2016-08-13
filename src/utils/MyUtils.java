@@ -44,11 +44,21 @@ public class MyUtils {
 		}
 
 	}
+	
+	public static boolean isInCompletedURL(String url){
+		if (CacheHashMap.completedURL != null && CacheHashMap.completedURL.size() > 0) {
+			if (CacheHashMap.completedURL.contains(url.trim())) {
+				return true;
+			}
+		} else {
+			return false;
+		}
+		return false;
+	}
 
 	public static void addRequestToPage(Page page, String url) {
-		List<String> completedURL = CacheHashMap.completedURL;
-		if (completedURL != null && completedURL.size() > 0) {
-			if (!completedURL.contains(url.trim())) {
+		if (CacheHashMap.completedURL != null && CacheHashMap.completedURL.size() > 0) {
+			if (!CacheHashMap.completedURL.contains(url.trim())) {
 				page.addTargetRequest(url.trim());
 			}
 		} else {
@@ -56,5 +66,6 @@ public class MyUtils {
 		}
 
 	}
+	
 
 }
