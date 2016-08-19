@@ -95,7 +95,10 @@ public class ShanTouProcessor implements PageProcessor {
 									project.setAgencyName(tr.select("td").get(j + 1).text());
 								}
 								if (tr.select("td").get(j).text().trim().equals("联系电话")) {
-									project.setAgecyPhone(tr.select("td").get(j + 1).text());
+									if (project.getAgecyPhone()==null) {
+										project.setAgecyPhone(tr.select("td").get(j + 1).text());
+
+									}
 								}
 								if (tr.select("td").get(j).text().trim().equals("工程地点")) {
 									project.setProjectAddress(tr.select("td").get(j + 1).text());

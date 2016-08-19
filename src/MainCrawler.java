@@ -22,6 +22,8 @@ public class MainCrawler {
 			System.out.println("爬虫在每  2 小时爬一次");
 			CrawlerTimerTask.StartCrawlerTask(2);
 			System.out.println("本次爬去完毕，将会在 2  小时后再启动    +new Data()");
+			
+//			CrawlerTask.startCrawlerTask();
 
 		}
 	}

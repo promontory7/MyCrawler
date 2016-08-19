@@ -53,10 +53,11 @@ public class ShenzhenProcessor implements PageProcessor {
 
 			Elements tables = doc.select("table");
 			for (Element table : tables) {
+				boolean isOwner = true;
 				for (Element tr : table.select("tr")) {
 					Elements tds = tr.select("td");
 					if (tds.size() > 0) {
-						boolean isOwner = true;
+						
 						for (int i = 0; i < tds.size(); i++) {
 
 							switch (tds.get(i).text().trim()) {
